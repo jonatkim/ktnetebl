@@ -1,0 +1,227 @@
+// EblTabs styles
+.ebl-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+
+  &--nowrap {
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .ebl-tab {
+      white-space: nowrap;
+      flex: 0 0 auto;
+      max-width: none;
+    }
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--end {
+    justify-content: flex-end;
+  }
+  &--pill {
+    padding: 4px;
+    border-radius: var(--radius-sm, 8px);
+    background: var(--bg-surface-subtle-normal, #ebf0f5);
+    z-index: 1;
+  }
+  &--line {
+    border-bottom: 1px solid var(--border-normal, #dce3eb);
+  }
+}
+
+.ebl-tabs__indicator {
+  position: absolute;
+  left: 0;
+  border-radius: 999px;
+  pointer-events: none;
+  transition:
+    transform 0.2s ease,
+    width 0.2s ease,
+    height 0.2s ease,
+    background-color 0.2s ease;
+  &--line {
+    bottom: -1px;
+    height: 2px;
+    border-radius: 0;
+    background: var(--ebl-tab-underline, var(--border-accent-darkneutral, #121a26));
+  }
+  &--pill {
+    top: 0;
+    bottom: auto;
+    z-index: -1;
+    border-radius: 5px;
+    background: var(--bg-surface-normal, #fff);
+    /* elevation/raised */
+    box-shadow: 0 1px 2px 0 var(--palette-neutralAlphaBlack-10, rgba(0, 0, 0, 0.1));
+  }
+}
+
+.ebl-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-normal, #1f2937);
+  padding: 6px 8px;
+  border-radius: 5px;
+  min-width: 48px;
+
+  &.is-stretch {
+    flex: 1;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &__inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  &__label {
+    display: flex;
+    gap: 4px;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: var(--text-subtle, #52637a);
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+  }
+
+  &--sm {
+    padding: 4px 6px;
+    min-width: 42px;
+    border-radius: 4px;
+    &.ebl-tab--line {
+      padding-left: 8px;
+      padding-right: 8px;
+      padding-bottom: 8px;
+    }
+    .ebl-tab__title {
+      font-size: 12px;
+    }
+  }
+  &--md {
+    &.ebl-tab--line {
+      padding-left: 12px;
+      padding-right: 12px;
+      padding-bottom: 10px;
+    }
+  }
+
+  &--lg {
+    padding: 8px 12px;
+    min-width: 84px;
+    border-radius: 10px;
+    &.ebl-tab--line {
+      padding: 4px 24px 16px;
+    }
+    .ebl-tab__subtitle {
+      line-height: 26px;
+    }
+    .ebl-tab__title {
+      font-size: 18px;
+      line-height: 26px;
+    }
+  }
+
+  // Variant: line (underline)
+  &--line {
+    background: transparent;
+    border-radius: 0;
+    color: var(--text-subtlest, #6b7c93);
+    .ebl-tab__title {
+      font-weight: 700;
+    }
+    &:hover:not(.is-active):not(.is-disabled),
+    &.is-active {
+      color: var(--ebl-tab-color, var(--text-normal, #1f2937));
+    }
+  }
+
+  // Variant: pill (filled)
+  &--pill {
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
+
+    &:hover:not(.is-disabled):not(.is-active) {
+      color: var(--ebl-tab-color, var(--text-normal, #1f2937));
+      background-color: var(
+        --ebl-tab-bg,
+        var(--bg-surface-transparent-hovered, rgba(0, 0, 0, 0.05))
+      );
+    }
+
+    &.is-active {
+      color: var(--ebl-tab-color, var(--border-accent-darkneutral, #121a26));
+      .ebl-tab__title {
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+// mobile
+.ebl-mo {
+  .ebl-tabs {
+    background: var(--bg-surface-normal, #fff);
+    &--nowrap {
+      .ebl-tabs__indicator {
+        bottom: 0;
+      }
+    }
+  }
+  .ebl-tab {
+    &--md {
+      &.ebl-tab--line {
+        padding: 4px 24px 16px;
+        .ebl-tab__title {
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 26px;
+        }
+        .ebl-tab__subtitle {
+          font-size: 16px;
+          line-height: 26px;
+        }
+      }
+    }
+  }
+}

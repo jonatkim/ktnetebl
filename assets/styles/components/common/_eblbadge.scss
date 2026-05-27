@@ -1,0 +1,185 @@
+.ebl-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 1;
+  /* caption/medium */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 133.333% */
+  white-space: nowrap;
+  transition: all 0.2s ease;
+
+  &.btn-badge {
+    padding: 4px 8px;
+    border-radius: var(--radius-full, 9999px);
+    background: var(--bg-accent-blue-subtle-normal, #f0f5ff);
+    color: var(--text-accent-blue-normal, #295bff);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+  }
+
+  // Pill shape
+  &--pill {
+    border-radius: 9999px;
+  }
+
+  // Size variants
+  &--sm {
+    padding: 2px 6px;
+    font-size: 11px;
+  }
+
+  &--md {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  &--lg {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  // Filled variants
+  &--filled {
+    &.ebl-badge--black {
+      background-color: var(--bg-accent-neutral, #121a26);
+      color: #fff;
+    }
+
+    &.ebl-badge--red {
+      background-color: var(--bg-accent-red, #ff1c1c);
+      color: #fff;
+    }
+
+    &.ebl-badge--pink {
+      background-color: var(--bg-accent-pink, #ff69b4);
+      color: #fff;
+    }
+
+    &.ebl-badge--amber {
+      background-color: var(--bg-accent-amber, #ffa500);
+      color: #fff;
+    }
+
+    &.ebl-badge--mint {
+      background-color: var(--bg-accent-mint, #4fffb0);
+      color: var(--text-accent-mint-normal, #121a26);
+    }
+
+    &.ebl-badge--blue {
+      background-color: var(--bg-accent-blue, #1976d2);
+      color: #fff;
+    }
+
+    &.ebl-badge--violet {
+      background-color: var(--bg-accent-violet, #9c27b0);
+      color: #fff;
+    }
+  }
+
+  // Outlined variants
+  &--outlined {
+    background-color: transparent;
+    border: 1px solid transparent;
+
+    &.ebl-badge--black {
+      border-color: var(--border-accent-darkneutral, #121a26);
+      color: var(--text-normal, #121a26);
+    }
+
+    &.ebl-badge--red {
+      border-color: var(--border-accent-red, #ff1c1c);
+      color: var(--text-accent-red-normal, #ff1c1c);
+    }
+
+    &.ebl-badge--pink {
+      border-color: var(--border-accent-pink, #ff69b4);
+      color: var(--text-accent-pink-normal, #ff69b4);
+    }
+
+    &.ebl-badge--amber {
+      border-color: var(--border-accent-amber, #ffa500);
+      color: var(--text-accent-amber-normal, #ffa500);
+    }
+
+    &.ebl-badge--mint {
+      border-color: var(--border-accent-mint, #4fffb0);
+      color: var(--text-accent-emerald-normal, #4fffb0);
+    }
+
+    &.ebl-badge--blue {
+      border-color: var(--border-accent-blue, #1976d2);
+      color: var(--text-accent-blue-normal, #1976d2);
+    }
+
+    &.ebl-badge--violet {
+      border-color: var(--border-accent-violet, #9c27b0);
+      color: var(--text-accent-violet-normal, #9c27b0);
+    }
+    &.ebl-badge--gray {
+      border-color: var(--overlay-normal, rgba(0, 0, 0, 0.4));
+      color: var(--text-subtle, #3b4a5e);
+    }
+  }
+
+  // Tonal variants
+  &--tonal {
+    background: var(--bg-accent-neutral-subtle-normal, #ebf0f5);
+    color: var(--text-subtlest, #6b7c93);
+
+    &.ebl-badge--black {
+      background-color: var(--bg-accent-neutral-subtle-normal, #ebf0f5);
+      color: var(--text-normal, #121a26);
+    }
+
+    &.ebl-badge--red {
+      background-color: var(--bg-accent-red-subtle-normal, #ffe5e5);
+      color: var(--text-accent-red-normal, #ff1c1c);
+    }
+
+    &.ebl-badge--pink {
+      background-color: var(--bg-accent-pink-subtle-normal, #ffe5f3);
+      color: var(--text-accent-pink-normal, #ff69b4);
+    }
+
+    &.ebl-badge--amber {
+      background-color: var(--bg-accent-amber-subtle-normal, #fff3e0);
+      color: var(--text-accent-amber-normal, #ffa500);
+    }
+
+    &.ebl-badge--mint {
+      background-color: var(--bg-accent-mint-subtle-normal, #e0fff3);
+      color: var(--text-accent-mint-normal, #4fffb0);
+    }
+
+    &.ebl-badge--blue {
+      background-color: var(--bg-accent-blue-subtle-normal, #e3f2fd);
+      color: var(--text-accent-blue-normal, #1976d2);
+    }
+
+    &.ebl-badge--violet {
+      background-color: var(--bg-accent-violet-subtle-normal, #f3e5f5);
+      color: var(--text-accent-violet-normal, #9c27b0);
+    }
+    &.ebl-badge--gray {
+      background: var(--bg-accent-neutral-subtle-normal, #ebf0f5);
+      color: var(--text-subtlest, #6b7c93);
+    }
+    &.ebl-badge--black {
+      color: var(--text-normal, #121a26);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 16px; /* 133.333% */
+      background: var(--bg-accent-neutral-subtle-normal, #ebf0f5);
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.ebl-landscape-overlay {
+  z-index: 2400 !important;
+
+  &__wrap {
+    width: 100vw;
+    min-height: 100dvh;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--overlay-bolder, rgba(0, 0, 0, 0.6));
+  }
+
+  &__message {
+    color: var(--text-inverse-normal, #fff);
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px; /* 144.444% */
+    word-break: keep-all;
+  }
+}

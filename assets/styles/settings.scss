@@ -1,0 +1,16 @@
+// Vuetify SASS 변수 오버라이드
+// !! 반드시 Vuetify import 전에 정의되어야 함 !!
+// @use 'vuetify/settings' with (...) 형식으로 사용
+
+@use 'vuetify/settings' with (
+  $dialog-border-radius: 20px,
+  $dialog-elevation: 24,
+  $dialog-margin: 24px,
+  $divider-border-color: var(--border-normal, #dce3eb),
+  $divider-opacity: 1,
+  $overlay-opacity: 0.4,
+  $bottom-sheet-elevation: 0,
+  $bottom-sheet-border-radius: 20px 20px 0 0,
+  $expansion-panel-active-title-min-height: 58px,
+  $expansion-panel-title-min-height: 58px
+);

@@ -1,0 +1,80 @@
+// Chart Styles
+.ebl-chart {
+  .apexcharts-legend {
+    margin-top: 8px;
+    justify-content: space-between;
+    .apexcharts-legend-series {
+      // margin: 0 !important;
+      width: calc(50% - 20px) !important;
+
+      .apexcharts-legend-text {
+        padding-left: 4px;
+        margin-left: 0;
+        flex: 1;
+      }
+      .ebl-chart__legend-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--text-normal, #121a26);
+        .percentage {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+  &--bar {
+    .apexcharts-tooltip.apexcharts-theme-light {
+      border: none;
+      background-color: transparent;
+    }
+  }
+
+  &--area {
+    .apexcharts-tooltip.apexcharts-theme-light {
+      border: none;
+      background-color: transparent;
+    }
+  }
+
+  &--info {
+    color: var(--text-subtle, #3b4a5e);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      h3 {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px; /* 142.857% */
+      }
+    }
+    & > p {
+      padding-left: 24px;
+      margin-top: 4px;
+    }
+  }
+
+  &__tooltip {
+    background: #2d3238;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    &-color {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+  }
+}

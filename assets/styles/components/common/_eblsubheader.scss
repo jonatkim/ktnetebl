@@ -1,0 +1,160 @@
+// EblSubHeader component styles
+.ebl-sub-header {
+  &--wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    min-height: 36px;
+  }
+  &--small {
+    margin-bottom: 8px;
+    min-height: 32px;
+    .ebl-sub-header__title {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      h2,
+      h3 {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+      }
+    }
+  }
+
+  &__title {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    h2,
+    h3 {
+      margin: 0;
+      overflow: hidden;
+      color: var(--text-normal, #121a26);
+      text-overflow: ellipsis;
+
+      /* Desktop/heading03 */
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 26px;
+    }
+
+    .count {
+      overflow: hidden;
+      color: var(--text-feedback-info-normal, #295bff);
+      text-overflow: ellipsis;
+
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 26px; /* 144.444% */
+    }
+
+    .unit {
+      overflow: hidden;
+      color: var(--text-normal, #121a26);
+      text-overflow: ellipsis;
+
+      /* Desktop/heading03 */
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 26px; /* 144.444% */
+    }
+
+    .ebl-sub-header__btn-tooltip {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      min-width: 20px;
+      align-self: center;
+      .ebl-btn__content .v-icon {
+        font-size: 20px;
+        color: var(--icon-subtle, #3b4a5e);
+      }
+    }
+  }
+  &__tooltip {
+    color: var(--text-inverse-normal, #fff);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    .list {
+      padding-left: 16px;
+      list-style-type: disc;
+    }
+  }
+
+  &__util {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+}
+
+.ebl-mo {
+  .ebl-sub-header {
+    &--wrap {
+      margin-bottom: 0;
+    }
+    &.ebl-sub-header--small {
+      min-height: 36px;
+      .ebl-sub-header {
+        &__title {
+          h2,
+          h3 {
+            overflow: hidden;
+            color: var(--text-normal, #121a26);
+            text-overflow: ellipsis;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px; /* 150% */
+          }
+        }
+      }
+    }
+    &__title {
+      h2,
+      h3 {
+        overflow: hidden;
+        color: var(--text-normal, #121a26);
+        text-overflow: ellipsis;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 26px;
+        &.fs-16 {
+          font-size: 16px;
+        }
+      }
+
+      .count {
+        overflow: hidden;
+        color: var(--text-feedback-info-normal, #295bff);
+        text-overflow: ellipsis;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+      }
+
+      .unit {
+        color: var(--text-normal, #121a26);
+        /* Mobile/heading03 */
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px; /* 150% */
+      }
+    }
+    &__util {
+      .ebl-btn__content .v-icon {
+        font-size: 20px;
+        color: var(--icon-subtle, #3b4a5e);
+      }
+    }
+  }
+}

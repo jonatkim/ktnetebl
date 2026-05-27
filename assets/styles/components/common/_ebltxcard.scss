@@ -1,0 +1,115 @@
+.ebl-tx-card {
+  display: flex;
+  padding: 20px 24px;
+  flex-direction: column;
+  border-radius: 16px;
+  border: 1px solid var(--border-normal, #dce3eb);
+  background: #fff;
+  transition: all 0.2s ease;
+
+  &--list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__toggle-icon {
+    cursor: pointer;
+    color: #999;
+    transition: transform 0.3s ease;
+    flex: 0 0 auto;
+
+    &.is-expanded {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__parties {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  &__party {
+    display: flex;
+    gap: 8px;
+  }
+  &__avatar {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 7.676px 7.5px 7.324px 7.5px;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    flex-shrink: 0;
+    border-radius: 1248.75px;
+    border: 1px solid var(--border-normal, #dce3eb);
+    background: var(--bg-canvas-normal, #f5f7fa);
+  }
+
+  &__party-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  &__party-label {
+    color: var(--text-grid-subtle, #6b7c93);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  &__party-name {
+    overflow: hidden;
+    color: var(--text-normal, #121a26);
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  &__comments-section {
+    display: flex;
+    min-height: 42px;
+    margin-top: 12px;
+    padding: 12px 20px;
+    align-items: flex-start;
+    gap: var(--margin-2xs, 8px);
+    align-self: stretch;
+    background: var(--bg-canvas-normal, #f5f7fa);
+    border-top: 1px solid var(--border-subtle, #ebf0f5);
+  }
+
+  &__comment {
+    color: var(--text-subtle, #3b4a5e);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
+
+  &__footer {
+    padding-top: 12px;
+  }
+
+  &__datetime {
+    overflow: hidden;
+    color: var(--text-disabled, rgba(0, 0, 0, 0.4));
+    text-overflow: ellipsis;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+}

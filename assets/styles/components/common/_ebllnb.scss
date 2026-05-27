@@ -1,0 +1,424 @@
+@use 'sass:color';
+
+// ============================================
+// EBL Navigation Drawer (LNB)
+// ============================================
+.ebl-lnb {
+  // 1. 컨테이너
+  // ============================================
+  &.v-navigation-drawer {
+    background: transparent;
+    color: var(--text-inverse-normal, #fff);
+    padding: 24px 0 0 24px;
+    border-right-width: 0;
+    position: fixed !important;
+  }
+
+  // 2. 스크롤 영역 (Dashboard ~ Favorite)
+  // ============================================
+  .v-navigation-drawer__content {
+    padding: 0 12px;
+    border-radius: var(--radius-md, 16px) var(--radius-md, 16px) 0 0;
+    background: var(--bg-primary-bolder-normal, #11113a);
+    position: relative;
+
+    .v-list--nav {
+      padding: 0;
+    }
+
+    // 상단 페이드 (sticky)
+    &::before {
+      content: '';
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: linear-gradient(
+        to bottom,
+        var(--bg-primary-bolder-normal, #11113a) 0%,
+        rgba(17, 17, 58, 0) 100%
+      );
+      pointer-events: none;
+      z-index: 10;
+      display: block;
+    }
+
+    // 하단 페이드 (sticky)
+    &::after {
+      content: '';
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: linear-gradient(
+        to top,
+        var(--bg-primary-bolder-normal, #11113a) 0%,
+        rgba(17, 17, 58, 0) 100%
+      );
+      pointer-events: none;
+      z-index: 10;
+      display: block;
+    }
+  }
+
+  // 3. 고정 하단 영역 (Create B/L, Settings)
+  // ============================================
+  .v-navigation-drawer__append {
+    padding: 0 12px;
+    background: var(--bg-primary-bolder-normal, #11113a);
+    overflow: visible;
+  }
+
+  // 4. 리스트 스타일
+  // ============================================
+  .v-list--density-default .v-list-subheader {
+    color: var(--text-inverse-subtle, rgba(255, 255, 255, 0.8));
+
+    /* Desktop/caption/medium */
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+    min-height: 24px;
+    padding: 4px 16px !important;
+    padding-inline-start: 16px !important;
+    padding-inline-end: 16px !important;
+    margin-top: 20px;
+  }
+
+  // 5. 커스텀 아이템 스타일
+  // ============================================
+  .ebl-lnb__item.v-list-item {
+    margin: 0;
+    padding: 0 16px;
+    border-radius: 8px;
+    min-height: 40px;
+    transition: background 0.2s ease;
+    color: var(--text-inverse-normal, #fff); // 기본 텍스트/아이콘 색상
+    &:not(:first-child) {
+      margin-top: 0;
+    }
+    &:hover {
+      background: var(--bg-primary-bolder-hovered, #0c1d66);
+      .v-list-item__overlay {
+        background: transparent !important;
+        opacity: 0 !important;
+      }
+    }
+
+    &.v-list-item--active {
+      background: var(--bg-primary-bolder-hovered, #0c1d66);
+      color: var(--text-secondary-normal, #24ffa6);
+      .v-list-item-title,
+      .count {
+        font-weight: 700;
+      }
+      .v-list-item__overlay {
+        background: transparent !important;
+        opacity: 0 !important;
+      }
+    }
+
+    .v-list-item {
+      &__spacer {
+        // 아이템의 스페이서 제거
+        display: none;
+      }
+      &__prepend {
+        margin-right: 12px;
+        .v-icon {
+          font-size: 20px;
+          opacity: 1;
+          color: inherit;
+        }
+      }
+    }
+    .count {
+      /* Desktop/body2/regular */
+      font-family: Pretendard;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; /* 142.857% */
+      margin-left: 12px;
+    }
+  }
+
+  // 6. 하단 버튼 영역
+  // ============================================
+  .ebl-lnb__quick-actions {
+    margin: 20px 8px;
+    margin-left: -26px;
+    height: 48px;
+    position: relative;
+    .btn-quick-action {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius-sm, 8px) var(--radius-sm, 8px) var(--radius-sm, 8px) 0;
+      --quick-btn-bg: var(--bg-secondary-normal, #24ffa6);
+      background: var(--quick-btn-bg);
+      color: var(--text-normal, #121a26);
+      font-weight: 700;
+      transition:
+        transform 0.1s ease,
+        background 0.2s ease;
+      // 버튼 왼쪽 아래 꼬리 (border triangle)
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -14px;
+        width: 0;
+        height: 0;
+        border-top: 14px solid var(--quick-btn-bg);
+        // tail is slightly darker than button bg
+        border-top-color: #1ed88d;
+        border-left: 14px solid transparent;
+      }
+      &.ebl-btn--disabled {
+        --quick-btn-bg: var(--bg-secondary-disabled, #bcc7d4);
+        color: var(--text-inverse-disabled, rgba(255, 255, 255, 0.4));
+        &::after {
+          border-top-color: #9fa9b4;
+        }
+      }
+      &:hover {
+        --quick-btn-bg: var(--bg-secondary-hovered, #00eb8b);
+        &::after {
+          border-top-color: #00c876;
+        }
+      }
+      &:active {
+        // --quick-btn-bg: var(--bg-secondary-pressed, #00c273);
+        transform: translateY(2px);
+        &::after {
+          // border-top-color: #00a561;
+        }
+      }
+    }
+  }
+
+  // 7. Settings & Copyright
+  // ============================================
+  .ebl-lnb__footer {
+    border-top: none;
+    padding-top: 0;
+    margin-bottom: 12px;
+    .v-divider {
+      margin: 12px -12px 0;
+      border-color: var(--border-inverse-normal, rgba(255, 255, 255, 0.1));
+    }
+
+    .v-list--nav {
+      padding: 0;
+    }
+  }
+
+  .ebl-lnb__copyright {
+    display: block;
+    padding: 24px 12px 12px;
+    color: var(--text-subtlest, #6b7c93);
+
+    /* Desktop/caption/medium */
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+  }
+}
+
+.ebl-lnb-mo {
+  .v-navigation-drawer__content {
+    padding: 0 24px 20px;
+    position: relative;
+    overscroll-behavior: contain;
+  }
+  .ebl-lnb-mo__section {
+    padding: 0;
+    padding-inline: 0;
+    overscroll-behavior: contain;
+  }
+
+  &__header {
+    display: flex;
+    padding-left: 24px;
+    align-items: center;
+    height: 56px;
+  }
+  &__footer {
+    padding: 16px 24px;
+
+    .btn-sign {
+      width: 100%;
+      color: var(--text-normal, #121a26);
+      border-radius: var(--radius-sm, 8px);
+      border: 1px solid #000;
+    }
+  }
+
+  .ebl-language-toggle-mo {
+    display: flex;
+    align-items: center;
+    .ebl-btn.btn-lang {
+      padding: 10px 12px;
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px; /* 142.857% */
+      &:focus {
+        background-color: transparent;
+      }
+      &--active {
+        color: #000;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px; /* 142.857% */
+      }
+    }
+    .divider {
+      width: 0;
+      height: 12px;
+      border-left: 1px solid #000;
+    }
+  }
+
+  .ebl-toggle-service-mo {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    &--wrap {
+      padding-top: 12px;
+      background-color: #fff;
+    }
+    &__inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      padding: 4px;
+      margin-bottom: 20px;
+      border-radius: 999px;
+      background: var(--bg-surface-subtle-normal, #ebf0f5);
+    }
+
+    .ebl-toggle-service-mo__thumb {
+      position: absolute;
+      top: 16px;
+      left: 4px;
+      width: calc((100% - 8px) / 2);
+      height: calc(100% - 20px);
+      border-radius: var(--radius-full, 9999px);
+      background: #0ee50f;
+      transition: transform 0.28s ease;
+      z-index: 0;
+    }
+
+    &.is-service .ebl-toggle-service-mo__thumb {
+      transform: translateX(100%);
+    }
+
+    .ebl-toggle-service-mo__option {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      background-color: transparent;
+      color: var(--text-normal, #121a26);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px; /* 142.857% */
+      border-radius: 20px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+
+      &--active {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .ebl-lnb-mo__title {
+    margin-bottom: 20px;
+    color: var(--text-normal, #121a26);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px; /* 133.333% */
+  }
+
+  .ebl-lnb-mo__parent {
+    padding-inline: 0;
+    min-height: 50px;
+    padding: 0 !important;
+    margin-top: 0 !important;
+
+    .v-list-item-title {
+      color: var(--text-normal, #121a26);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 26px; /* 162.5% */
+    }
+
+    .v-list-item-title.is-active {
+      font-weight: 700;
+    }
+    .v-list-item__append {
+      margin-left: 10px;
+      .v-list-item__spacer {
+        display: none;
+      }
+      .v-icon {
+        color: var(--icon-normal, #121a26);
+        opacity: 1;
+      }
+    }
+    .v-list-item__overlay {
+      display: none;
+    }
+  }
+
+  .ebl-lnb-mo__terms-item {
+    display: block;
+    padding: 12px 0;
+    color: var(--text-subtlest, #6b7c93);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px; /* 162.5% */
+    text-decoration: none;
+  }
+  .ebl-lnb-mo__utils {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .v-list-group__items .v-list-item.ebl-lnb-mo__child {
+    padding: 0 !important;
+    padding-inline: 20px !important;
+    margin-top: 0 !important;
+    min-height: 42px !important;
+    &.v-list-item--active {
+      background: var(--bg-surface-hovered, #f5f7fa);
+      & > .v-list-item__overlay {
+        display: none;
+      }
+      & > .v-list-item__content .v-list-item-title {
+        color: var(--text-normal, #121a26);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 26px; /* 162.5% */
+      }
+    }
+
+    .v-list-item-title {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-normal, #121a26);
+    }
+  }
+  .btn-close {
+    width: 56px;
+    height: 56px;
+  }
+}

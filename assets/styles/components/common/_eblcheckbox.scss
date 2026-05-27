@@ -1,0 +1,158 @@
+.ebl-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+  vertical-align: top;
+
+  &--disabled {
+    cursor: not-allowed;
+    .ebl-checkbox__box {
+      opacity: 0.6;
+    }
+    .ebl-checkbox__label {
+      color: var(--text-disabled, #bcc7d4);
+    }
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  &__box {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    color: #1976d2;
+    border-radius: var(--radius-xs, 4px);
+    border: 1px solid currentColor;
+    background: #fff;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--primary {
+      color: #1976d2;
+      border-color: var(--border-input-normal, #bcc7d4);
+    }
+
+    &--subtle {
+      border-color: var(--border-input-normal, #bcc7d4);
+      color: var(--bg-surface-subtle-normal, #ebf0f5);
+      .v-icon {
+        color: var(--text-normal, #121a26) !important;
+      }
+    }
+
+    &--inverse {
+      color: var(--bg-surface-inverse-normal, #121a26);
+    }
+
+    &--ghost {
+      color: var(--bg-surface-inverse-normal, #121a26);
+      background-color: transparent !important;
+      border-color: transparent !important;
+      .v-icon {
+        color: var(--bg-surface-inverse-normal, #121a26) !important;
+      }
+
+      // 투명 모드에서는 체크되어도 배경/보더 유지
+      .ebl-checkbox__input:checked ~ &,
+      .ebl-checkbox__input:indeterminate ~ & {
+        background: transparent;
+        border-color: transparent;
+        color: #333;
+        .v-icon {
+          color: #333 !important;
+        }
+      }
+    }
+  }
+
+  // 체크 상태
+  .ebl-checkbox__input:checked ~ .ebl-checkbox__box,
+  .ebl-checkbox__input:indeterminate ~ .ebl-checkbox__box {
+    background: currentColor;
+    border-color: currentColor;
+    .v-icon {
+      color: #fff;
+    }
+  }
+
+  // Focus 상태
+  &:not(.ebl-checkbox--disabled) .ebl-checkbox__input:focus-visible ~ .ebl-checkbox__box {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  // Hover 상태
+  &:not(.ebl-checkbox--disabled):hover .ebl-checkbox__box {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.2;
+      border-radius: var(--radius-xs, 4px);
+      box-shadow: 0 0 0 4px currentColor;
+      pointer-events: none;
+    }
+  }
+
+  &__icon.v-icon {
+    font-size: 12px;
+    display: block;
+  }
+
+  &__label {
+    color: var(--text-normal, #121a26);
+    display: flex;
+    align-items: center;
+
+    /* body2/regular */
+    font-family: var(--typography-font-family-kor-body, Pretendard);
+    font-size: var(--typography-font-size-body02, 14px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+  }
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+
+  &.disabled-row {
+    opacity: 0.6;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-children {
+  margin-left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

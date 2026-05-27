@@ -1,0 +1,220 @@
+﻿.ebl-input {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 36px;
+    gap: 10px;
+    padding: 0 12px;
+    border-radius: var(--radius-sm, 8px);
+    border: 1px solid var(--border-normal, #dce3eb);
+    background: var(--bg-surface-normal, #fff);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+
+    &:hover:not(.is-disabled) {
+      border: 1px solid var(--border-hovered, #bcc7d4);
+      background: var(--bg-surface-hovered, #f5f7fa);
+    }
+  }
+
+  &.is-focused &__wrapper {
+    border-color: var(--border-focused-normal, #295bff);
+    outline: 2px solid #dee8ff;
+  }
+
+  &.is-error &__wrapper {
+    border-color: #d32f2f;
+    &.is-focused {
+      outline-color: var(--border-error-subtle, #ffe0e0);
+    }
+  }
+  &.is-error.is-focused &__wrapper {
+    outline-color: var(--border-error-subtle, #ffe0e0);
+  }
+
+  &.is-disabled &__wrapper {
+    background: var(--bg-surface-disabled, #f5f7fa);
+    cursor: not-allowed;
+  }
+
+  // Readonly state
+  &.is-readonly &__wrapper {
+    border-color: var(--border-disabled, #dce3eb);
+    background: var(--bg-surface-disabled, #f5f7fa);
+  }
+  // Readonly 상태 호버 시에도 색상 유지
+  &.is-readonly &__wrapper:hover {
+    border-color: var(--border-disabled, #dce3eb);
+    background: var(--bg-surface-disabled, #f5f7fa);
+  }
+
+  &__prepend,
+  &__append {
+    display: flex;
+    align-items: center;
+    color: var(--Icon-normal, #121a26);
+    flex-shrink: 0;
+    .v-icon {
+      font-size: 16px;
+    }
+    // EblBtn 투명 버튼은 인풋 내부에서는 호버 배경 제거
+    .ebl-btn.ebl-btn--ghost:hover,
+    .ebl-btn.ebl-btn--ghost:active {
+      background: transparent;
+    }
+  }
+
+  &__prepend-text,
+  &__append-text {
+    color: var(--text-subtle, #3b4a5e);
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0;
+    color: var(--text-form-input-value, #121a26);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+
+    &::placeholder {
+      color: var(--text-form-input-placeholder, #9ba9ba);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--text-disabled, #bcc7d4);
+    }
+
+    &[type='number'] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    &[type='number']::-webkit-outer-spin-button,
+    &[type='number']::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__counter {
+    flex-shrink: 0;
+    white-space: nowrap;
+    color: var(--text-subtle, #52637a);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  &__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin: 0 -2px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--Icon-subtle, #52637a);
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  // Size variants
+  &--small &__wrapper {
+    height: 28px;
+    padding: 0 8px;
+    gap: 6px;
+    border-radius: 6px;
+  }
+
+  &--small &__input {
+    font-size: 12px;
+  }
+
+  &--small &__prepend,
+  &--small &__append {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+
+  &--small &__counter {
+    font-size: 11px;
+  }
+
+  &--small &__clear {
+    width: 20px;
+    height: 20px;
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+
+  &--medium &__wrapper {
+    height: 36px;
+  }
+
+  &--large &__wrapper {
+    height: 48px;
+    padding: 0 16px;
+    gap: 12px;
+    border-radius: 10px;
+  }
+
+  &--large &__input {
+    font-size: 16px;
+  }
+
+  &--large &__prepend,
+  &--large &__append {
+    .v-icon {
+      font-size: 24px;
+    }
+  }
+
+  &--large &__counter {
+    font-size: 14px;
+  }
+
+  &--large &__clear {
+    width: 28px;
+    height: 28px;
+    .v-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+.ebl-mo {
+  .ebl-input--medium .ebl-input__wrapper {
+    height: 40px;
+  }
+}
+
+// Mobile responsive, 포탈서비스페이지는 미디어쿼리로적용
+@media (max-width: 960px) {
+  .ebl-input--medium .ebl-input__wrapper {
+    height: 40px;
+  }
+}

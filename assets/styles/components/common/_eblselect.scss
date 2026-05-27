@@ -1,0 +1,308 @@
+@use '../../mixins' as *;
+
+.ebl-select {
+  display: inline-flex;
+  flex-direction: column;
+  width: auto;
+  max-width: 300px;
+  position: relative;
+  gap: 6px;
+
+  &__control {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: auto;
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: var(--radius-sm, 8px);
+    background: var(--bg-surface-normal, #fff);
+    color: var(--text-form-input-value, #121a26);
+    cursor: pointer;
+  }
+  &--outlined .ebl-select__control {
+    border: 1px solid var(--border-normal, #dce3eb);
+  }
+
+  &:hover:not(.is-disabled):not(.is-readonly) .ebl-select__control {
+    border-color: var(--border-hovered, #bcc7d4);
+  }
+
+  &.is-focused:not(.is-disabled):not(.is-readonly) .ebl-select__control,
+  &.is-open:not(.is-disabled):not(.is-readonly) .ebl-select__control {
+    border-color: var(--border-active, #295bff);
+    outline: 2px solid #dee8ff;
+  }
+
+  &.is-error .ebl-select__control {
+    border-color: #ff3b3b;
+    outline: 2px solid #ffe6e6;
+  }
+
+  &.is-disabled .ebl-select__control {
+    background: var(--bg-surface-disabled, #f5f7fa);
+    color: var(--text-disabled, #bcc7d4);
+    cursor: not-allowed;
+  }
+
+  &.is-readonly .ebl-select__control {
+    background: var(--bg-surface-disabled, #f5f7fa);
+    border-color: var(--border-disabled, #dce3eb);
+    cursor: default;
+  }
+  &.block {
+    width: 100%;
+    max-width: none;
+  }
+
+  &__value {
+    flex: 0 1 auto;
+    min-width: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: var(--text-form-input-value, #121a26);
+
+    &.is-placeholder {
+      color: var(--text-form-input-placeholder, #9ba9ba);
+    }
+  }
+
+  &__query {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: inherit;
+    color: var(--text-form-input-value, #121a26);
+    cursor: pointer;
+    caret-color: var(--border-active, #295bff);
+
+    &::placeholder {
+      color: var(--text-form-input-placeholder, #9ba9ba);
+    }
+
+    &:not(:read-only) {
+      cursor: text;
+    }
+  }
+
+  &__value--combobox {
+    flex: 1;
+    overflow: visible;
+  }
+
+  &__prepend,
+  &__append {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    .v-icon {
+      font-size: inherit;
+    }
+  }
+
+  &__prepend {
+    margin-right: 8px;
+  }
+
+  &__append,
+  &__clear {
+    margin-left: 8px;
+  }
+
+  &__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-subtle, #6b7684);
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--text-normal, #121a26);
+    }
+  }
+
+  &__arrow {
+    margin-left: 12px;
+    color: inherit;
+    transition: transform 0.2s ease;
+    font-size: 16px !important;
+  }
+
+  &.is-open .ebl-select__arrow {
+    transform: rotate(180deg);
+  }
+
+  // options가 없을 때 arrow 색상 disabled로
+  &.is-empty .ebl-select__arrow {
+    color: var(--icon-disabled, #bcc7d4);
+  }
+
+  &--small .ebl-select__control {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  &--large .ebl-select__control {
+    min-height: 48px;
+    padding: 0 16px;
+    font-size: 16px;
+  }
+
+  &--block {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  &__message {
+    font-size: 12px;
+    color: var(--text-subtle, #6b7684);
+    margin-top: 4px;
+    transition: color 0.2s ease;
+
+    &.is-error {
+      color: #ff3b3b;
+    }
+  }
+}
+
+// ==========================================
+// Teleport 스타일 (전역 - body에 렌더링됨)
+// ==========================================
+.ebl-select__menu {
+  // position, top, left, width는 인라인 스타일로 설정됨
+  padding: 6px;
+  background: #fff;
+  border: 1px solid var(--border-normal, #dce3eb);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  max-height: 264px !important; // 고정값 (인라인 스타일 무시)
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #bcc7d4 transparent;
+  @include ebl-scrollbar(8px, #ccd4df, #b3bdcc, 2px);
+}
+
+.ebl-select__option {
+  padding: 8px 12px;
+  cursor: pointer;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--text-normal, #121a26);
+  text-overflow: ellipsis;
+  border-radius: var(--radius-sm, 8px);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+
+  .ebl-select__option-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ebl-select__check {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    color: #1976d2;
+    border-radius: var(--radius-xs, 4px);
+    border: 1px solid var(--border-input-normal, #bcc7d4);
+    background: #fff;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.is-checked {
+      background: currentColor;
+      border-color: currentColor;
+      .v-icon {
+        color: #fff;
+      }
+    }
+
+    &.is-disabled {
+      opacity: 0.6;
+    }
+  }
+
+  &:hover:not(.is-disabled) {
+    background: var(--bg-surface-hovered, #f5f7fa);
+  }
+
+  &.is-active:not(.is-disabled) {
+    background: var(--bg-surface-selected, #dee8ff);
+  }
+
+  &.is-highlighted:not(.is-disabled) {
+    // background: #bdd3ff;
+    // outline: 2px solid #dee8ff;
+    background-color: #f0f5ff;
+    box-shadow: inset 0 0 0 1px #bdd3ff;
+  }
+
+  &.is-disabled {
+    color: var(--text-disabled, #bcc7d4);
+    cursor: not-allowed;
+    background: transparent;
+  }
+}
+
+.ebl-select__no-result {
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--text-subtle, #9ba9ba);
+  text-align: center;
+
+  strong {
+    color: var(--text-normal, #121a26);
+    font-weight: 600;
+  }
+
+  kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    padding: 1px 6px;
+    border: 1px solid var(--border-normal, #dce3eb);
+    border-radius: 6px;
+    background: var(--bg-surface-disabled, #f5f7fa);
+    color: var(--text-normal, #121a26);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+.ebl-select-message-enter-active,
+.ebl-select-message-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.ebl-select-message-enter-from,
+.ebl-select-message-leave-to {
+  opacity: 0;
+}
+
+.ebl-mo {
+  .ebl-select {
+    gap: 6px;
+  }
+}

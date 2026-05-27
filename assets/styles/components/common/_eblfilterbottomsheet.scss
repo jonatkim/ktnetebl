@@ -1,0 +1,111 @@
+// ============================================
+// EblFilterBottomSheet Component Styles
+// ============================================
+
+.ebl-filter-dialog {
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 2px 24px 20px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__date-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__date-field {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+  }
+
+  &__date-btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 12px !important;
+    color: var(--text-normal, #10161f);
+    border-color: var(--border-normal, #dce3eb);
+    font-weight: 400;
+
+    &--placeholder {
+      color: #9ba9ba;
+    }
+
+    &--active,
+    &--active:hover,
+    &--active:focus {
+      border-color: var(--palette-blue-500, #295bff);
+      background-color: var(--bg-surface-normal, #fff);
+    }
+    .v-icon {
+      font-size: 20px;
+      color: var(--icon-subtle, #3b4a5e);
+    }
+  }
+
+  &__date-separator {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6px;
+    ::after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background: var(--border-accent-darkNeutral, #121a26);
+    }
+  }
+
+  &__presets {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    margin-top: 8px;
+    .is-active {
+      color: var(--text-normal, #121a26);
+      font-weight: 700;
+      line-height: 20px;
+      border: 1px solid var(--border-normal, #dce3eb);
+      background: var(--bg-accent-blue-subtle-normal, #f0f5ff);
+    }
+  }
+}
+
+// ============================================
+// Date Picker Wrapper Styles
+// ============================================
+.ebl-date-picker-wrapper.ebl-date-picker--filter {
+  margin: 0 -8px;
+  .ebl-date-picker {
+    --dp-month-year-row-button-size: 24px;
+    --dp-month-year-row-height: 24px;
+    --dp-font-size: 16px;
+    --dp-cell-border-radius: 20px;
+  }
+  .dp__menu {
+    width: 100%;
+    border: none;
+  }
+  .dp__menu_inner {
+    padding: 0;
+  }
+  .dp__active_date {
+    font-weight: 700;
+  }
+  .dp__calendar_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

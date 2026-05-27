@@ -1,0 +1,62 @@
+.ebl-page-header {
+  &--wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--margin-2xs, 8px);
+    margin-bottom: 24px;
+  }
+  &__header {
+    display: flex;
+    width: 100%;
+    height: 48px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h1 {
+      overflow: hidden;
+      color: var(--text-normal, #121a26);
+      text-overflow: ellipsis;
+      font-family: 'IBM Plex Sans KR';
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 36px;
+    }
+    .ebl-page-header__btn-tooltip {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      min-width: 20px;
+      .ebl-btn__content .v-icon {
+        font-size: 20px;
+        color: var(--icon-subtle, #3b4a5e);
+      }
+    }
+  }
+  &__tooltip {
+    color: var(--text-inverse-normal, #fff);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    .list {
+      padding-left: 16px;
+      list-style-type: disc;
+    }
+  }
+
+  &__util {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+}

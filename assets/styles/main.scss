@@ -1,0 +1,97 @@
+@use './tokens' as *;
+@use './variables' as *;
+@use './reset' as *;
+@use './fonts' as *;
+@use './mixins' as *;
+@use './utilities' as *;
+@use './ag-grid-theme' as *;
+
+// =============================================
+// 레이아웃 스타일
+// =============================================
+@use './layout/ebl';
+@use './layout/portal';
+@use './layout/blank';
+
+// =============================================
+// 포탈 페이지 스타일
+// =============================================
+@use './portal/index';
+
+// =============================================
+// 컴포넌트 스타일
+// =============================================
+@use './components/common/common';
+@use './components/common/eblbtn';
+@use './components/common/eblbreadcrumb';
+@use './components/common/eblbadge';
+@use './components/common/eblcheckbox';
+@use './components/common/ebldatepicker';
+@use './components/common/eblinput';
+@use './components/common/ebltextarea';
+@use './components/common/eblradiobtn';
+@use './components/common/eblselect';
+@use './components/common/ebldialog';
+@use './components/common/eblglobaldialog';
+@use './components/common/eblswitch';
+@use './components/common/ebltab';
+@use './components/common/ebltopbanner';
+@use './components/common/ebltoast';
+@use './components/common/ebltooltip';
+@use './components/common/eblpagination';
+@use './components/common/ebllandscapeoverlay';
+@use './components/common/eblbottomsheet';
+@use './components/common/eblfilterbottomsheet';
+@use './components/common/eblinfo';
+@use './components/common/ebloptiongroup';
+@use './components/common/eblfileinput';
+@use './components/common/ebllnb';
+@use './components/common/eblpageheader';
+@use './components/common/eblsubheader';
+@use './components/common/eblrecipient';
+@use './components/common/eblblno';
+@use './components/common/eblfolderitem';
+@use './components/common/ebllogolabel';
+@use './components/common/eblcontainerlist';
+@use './components/common/eblcarditem';
+@use './components/common/eblroute';
+@use './components/common/ebltxcard';
+@use './components/eblchart';
+// =============================================
+// ag-Grid Cell Renderer 스타일
+// =============================================
+@use './components/aggrid';
+
+// =============================================
+// 퍼블리싱 가이드 스타일
+// =============================================
+@use './pub';
+
+// =============================================
+// 전역 스타일
+// =============================================
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-family: var(--font-family-base);
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+}
+
+/*가로 최소값 1120 이하 스크롤 처리*/
+html {
+  &.ebl-pc {
+    min-width:1120px;
+    overflow-x:scroll;
+  }
+}

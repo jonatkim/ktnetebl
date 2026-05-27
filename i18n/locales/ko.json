@@ -1,0 +1,78 @@
+{
+  "common": {
+    "lang": {
+      "lang": "언어",
+      "ko": "한국어",
+      "en": "English"
+    }
+  },
+  "i18nGuide": {
+    "title": "다국어 설정 가이드",
+    "description": "간단한 다국어 전환 가이드입니다.",
+    "currentLocale": "현재 언어",
+    "changeLocale": "언어 변경",
+    "samples": {
+      "greeting": "안녕하세요!",
+      "welcome": "eBL 플랫폼에 오신 것을 환영합니다.",
+      "feature": "로케일을 변경하면 모든 텍스트가 자동으로 업데이트됩니다.",
+      "nextStep": "나중에 앱(브라우저) 싱크, 쿠키 저장 등의 기능을 추가할 수 있습니다."
+    },
+    "buttons": {
+      "selectKorean": "한국어로 설정",
+      "selectEnglish": "English로 설정"
+    }
+  },
+  "portal": {
+    "home": {
+      "sections": {
+        "purely": {
+          "title": "완전한 디지털, 완벽한 연결",
+          "desc": [
+            { "text": "모든 데이터가 무결한 가치로" },
+            { "text": "태어나는 순간,", "hasShip": true },
+            { "text": "디지털 무역의 첫 기록이 시작됩니다" }
+          ]
+        },
+        "defined": {
+          "title": "Defined at the Origin",
+          "subtitle": "Digital Issuance",
+          "desc": [
+            { "text": "모든 데이터가 무결한 가치로" },
+            { "text": "태어나는 순간,", "hasShip": true },
+            { "text": "디지털 무역의 첫 기록이 시작됩니다" }
+          ]
+        },
+        "seamless": {
+          "title": "Seamless Orbit",
+          "subtitle": "Transmission Chain",
+          "desc": [
+            { "text": "디지털 봉투에 견고하게" },
+            { "text": "담겨진 오너십,", "hasShip": true },
+            { "text": "중단 없는 연결을 통해" },
+            { "text": "글로벌 파트너들과 함께 증폭되고 완성됩니다" }
+          ]
+        },
+        "screen": {
+          "title": "Screen to Hand",
+          "subtitle": "Materialization",
+          "desc": [
+            { "text": "실무 환경과의" },
+            { "text": "유연한 가교", "hasShip": true },
+            { "text": "다양한 업무 방식과의 단절 없는 조화와" },
+            { "text": "실물 전환을 지원합니다" }
+          ]
+        },
+        "absolute": {
+          "title": "Absolute Fulfillment",
+          "subtitle": "Finalization",
+          "desc": [
+            { "text": "무역 가치의" },
+            { "text": "궁극적인 실무적 실현", "hasShip": true },
+            { "text": "화물의 최종 인도를 확정하며" },
+            { "text": "디지털 무역의 모든 여정을 완성합니다" }
+          ]
+        }
+      }
+    }
+  }
+}

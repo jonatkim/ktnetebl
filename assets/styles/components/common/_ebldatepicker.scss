@@ -1,0 +1,254 @@
+/* EblDatePicker CSS Variables - 프로젝트 토큰 적용 */
+.ebl-date-picker {
+  .ebl-input__prepend,
+  .ebl-input__append {
+    color: var(--icon-subtle, #52637a);
+  }
+  .dp__theme_light {
+    /* Colors (mapped) */
+    --dp-background-color: var(--bg-surface-normal, #fff);
+    // 팝업/캘린더 배경색 (기본값: #fff)
+
+    --dp-text-color: var(--text-normal, #121a26);
+    // 기본 텍스트 색상 (기본값: #212121)
+
+    --dp-hover-color: var(--bg-primary-subtle-normal, rgba(41, 91, 255, 0.08));
+    // hover 배경색 (기본값: #f3f3f3)
+
+    --dp-hover-text-color: var(--text-primary-normal, #295bff);
+    // hover 텍스트 색상 (기본값: #212121)
+
+    --dp-hover-icon-color: var(--text-disabled, #bcc7d4);
+    // hover 아이콘 색상 (기본값: #959595)
+
+    --dp-primary-color: var(--bg-surface-checked, #295bff);
+    // 선택/포커스 주요 색상 (기본값: #1976d2)
+
+    --dp-primary-disabled-color: var(--bg-primary-subtle-normal, rgba(41, 91, 255, 0.08));
+    // 비활성 primary 색상 (기본값: #6bacea)
+
+    --dp-primary-text-color: var(--text-inverse-normal, #fff);
+    // primary 위 텍스트 색상 (기본값: #f8f5f5)
+
+    --dp-secondary-color: var(--text-disabled, #bcc7d4);
+    // 보조 색상(테두리/비활성 톤) (기본값: #c0c4cc)
+
+    --dp-border-color: var(--border-normal, #dce3eb);
+    // 기본 테두리 색상 (기본값: #ddd)
+
+    --dp-menu-border-color: var(--border-normal, #dce3eb);
+    // 팝업(menu) 테두리 색상 (기본값: #ddd)
+
+    --dp-border-color-hover: var(--border-normal, #dce3eb);
+    // hover 시 테두리 색상 (기본값: #aaaeb7)
+
+    --dp-border-color-focus: var(--border-normal, #dce3eb);
+    // focus 시 테두리 색상 (기본값: #aaaeb7)
+
+    --dp-disabled-color: var(--bg-surface-disabled, #f5f7fa);
+    // 비활성 배경색 (기본값: #f6f6f6)
+
+    --dp-scroll-bar-background: var(--bg-surface-disabled, #f5f7fa);
+    // 스크롤바 트랙 배경색 (기본값: #f3f3f3)
+
+    --dp-scroll-bar-color: var(--text-disabled, #bcc7d4);
+    // 스크롤바 썸 색상 (기본값: #959595)
+
+    // --dp-success-color: #76d275; // 성공 색상 (기본값 동일)
+    // --dp-success-color-disabled: #a3d9b1; // 성공 비활성 색상 (기본값 동일)
+
+    --dp-icon-color: var(--icon-normal, #121a26);
+    // 기본 아이콘 색상 (기본값: #959595)
+
+    // --dp-danger-color: #ff6f60; // 에러 색상 (기본값 동일)
+    // --dp-marker-color: #ff6f60; // 마커 색상 (기본값 동일)
+    // --dp-tooltip-color: #fafafa; // 툴팁 배경색 (기본값 동일)
+
+    --dp-disabled-color-text: var(--text-disabled, #bcc7d4);
+    // 비활성 텍스트 색상 (기본값: #8e8e8e)
+
+    --dp-highlight-color: var(--bg-primary-subtle-normal, rgba(41, 91, 255, 0.08));
+    // 하이라이트 배경색 (기본값: rgb(25 118 210 / 10%))
+
+    // --dp-range-between-dates-* : 기본값 유지
+
+    /* General (mapped) */
+    --dp-font-family: var(
+      --font-family-base,
+      'IBM Plex Sans KR',
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      Roboto,
+      'Noto Sans KR',
+      sans-serif
+    );
+    // datepicker 폰트 패밀리
+    // (기본값: system-ui, -apple-system, "Segoe UI", Roboto, ...)
+
+    --dp-border-radius: 8px;
+    // 전체 라운드 (기본값: 4px)
+
+    --dp-cell-border-radius: 6px;
+    // 날짜 셀 라운드 (기본값: 4px)
+
+    // --dp-common-transition: all 0.1s ease-in; // 기본값 동일
+
+    /* Sizing (mapped) */
+    --dp-button-height: 32px;
+    // 오버레이/컨트롤 버튼 높이 (기본값: 35px)
+
+    --dp-month-year-row-height: 32px;
+    // 상단 월·연도 헤더 높이 (기본값: 35px)
+
+    --dp-month-year-row-button-size: 32px;
+    // 헤더 이전/다음 버튼 크기 (기본값: 35px)
+
+    // --dp-button-icon-height: 20px; // 기본값 동일
+
+    --dp-cell-size: 40px;
+    // 날짜 셀 크기 (기본값: 35px)
+
+    --dp-cell-padding: 4px;
+    // 날짜 셀 내부 패딩 (기본값: 5px)
+
+    --dp-common-padding: 10px;
+    // 캘린더 컨테이너 내부 패딩 (기본값: 10px)
+
+    --dp-input-icon-padding: 36px;
+    // input 아이콘 영역 패딩 (기본값: 35px)
+
+    --dp-input-padding: 0 36px 0 12px;
+    // input 패딩 (기본값: 6px 30px 6px 12px)
+
+    --dp-menu-min-width: 260px;
+    // 팝업 최소 너비 (기본값: 260px)
+
+    --dp-action-buttons-padding: 6px 12px;
+    // 하단 액션 버튼 패딩 (기본값: 2px 5px)
+
+    --dp-row-margin: 8px 0;
+    // 날짜 row 간격 (기본값: 5px 0)
+
+    --dp-calendar-header-cell-padding: 8px 0 0;
+    // 요일 헤더 셀 패딩 (기본값: 0.5rem)
+
+    --dp-two-calendars-spacing: 16px;
+    // 2캘린더 간격 (기본값: 10px)
+
+    --dp-overlay-col-padding: 4px;
+    // 월/연도 오버레이 컬럼 패딩 (기본값: 3px)
+
+    --dp-time-inc-dec-button-size: 28px;
+    // 타임피커 증감 버튼 크기 (기본값: 32px)
+
+    --dp-menu-padding: 16px;
+    // 팝업 내부 패딩 (기본값: 6px 8px)
+
+    /* Font sizes (mapped) */
+    --dp-font-size: 14px;
+    // 기본 폰트 크기 (기본값: 1rem)
+
+    --dp-preview-font-size: 12px;
+    // 프리뷰 폰트 크기 (기본값: 0.8rem)
+
+    --dp-time-font-size: 32px;
+    // 타임피커 폰트 크기 (기본값: 0.8rem)
+
+    /* Transitions (mapped) */
+    // --dp-animation-duration: 0.1s; // 기본값 동일
+    // --dp-menu-appear-transition-timing: cubic-bezier(0.4, 0, 1, 1); // 기본값 동일
+    // --dp-transition-timing: ease-out; // 기본값 동일
+
+    --dp-multi-calendars-spacing: 16px;
+  }
+
+  .dp__input {
+    line-height: 22px;
+
+    &:focus,
+    &.dp__input_focus {
+      border-color: var(--dp-primary-color);
+      box-shadow: 0 0 0 2px var(--bg-primary-subtle-normal, rgba(41, 91, 255, 0.08));
+    }
+  }
+  .dp__menu.dp__menu_index.dp__theme_light {
+    box-shadow: 0 4px 8px 0 var(--palette-neutralAlphaBlack-10, rgba(0, 0, 0, 0.1));
+  }
+  .dp__calendar {
+    margin-top: 16px;
+  }
+
+  .dp__range_end,
+  .dp__range_start,
+  .dp__active_date {
+    background: var(--dp-primary-color);
+    color: var(--dp-primary-text-color);
+  }
+  .dp__range_between {
+    border: none;
+    color: var(--text-normal, #121a26);
+  }
+
+  .dp__calendar_header_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dp-calendar-header-cell-padding);
+    color: var(--text-subtle, #52637a);
+    font-weight: 500;
+    height: 32px;
+  }
+  .dp__calendar_header_separator {
+    display: none;
+  }
+  /* 좌/우 화살표 버튼은 고정폭 + 줄어들지 않게 */
+  .dp__month_year_wrap > .dp__btn.dp--arrow-btn-nav {
+    flex: 0 0 var(--dp-month-year-row-button-size, 32px);
+  }
+
+  /* 가운데(연/월) 래퍼: 남는 폭 전부 차지 */
+  .dp__month_year_wrap > .dp__month_year_wrap {
+    flex: 1 1 auto;
+    min-width: 0; /* 텍스트 길어질 때 flex 깨짐 방지 */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 연/월 간격(원하는 값으로) */
+    justify-content: center;
+    color: var(--text-normal, #121a26);
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+    .dp__month_year_select {
+      width: auto;
+      max-width: 50%; /* 너무 길어지지 않도록 최대 너비 제한 */
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0 16px;
+    }
+  }
+
+  &.is-error .dp__input {
+    border-color: #d32f2f;
+
+    &:hover {
+      border-color: #d32f2f;
+    }
+  }
+  &__header-util {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-normal, #dce3eb);
+
+    color: var(--text-normal, #121a26);
+
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px; /* 144.444% */
+  }
+}

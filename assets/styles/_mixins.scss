@@ -1,0 +1,27 @@
+@mixin ebl-scrollbar(
+  $size: 16px,
+  $thumb-color: var(--border-normal, #dce3eb),
+  $thumb-hover-color: var(--border-bolder, #bcc7d4),
+  $thumb-border: 4px,
+  $track-background: transparent
+) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-background;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: 99px;
+    border: $thumb-border solid transparent;
+    background-clip: padding-box;
+
+    &:hover {
+      background-color: $thumb-hover-color;
+    }
+  }
+}

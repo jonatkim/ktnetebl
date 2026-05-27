@@ -1,0 +1,43 @@
+.ebl-breadcrumb {
+  &__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__text {
+    color: var(--text-subtle, #52637a);
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    transition: color 0.2s ease;
+
+    &--active {
+      color: var(--text-link-normal, #295bff);
+    }
+    &--link {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--text-link-normal, #295bff);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__separator {
+    color: var(--Icon-subtle, #52637a);
+  }
+}

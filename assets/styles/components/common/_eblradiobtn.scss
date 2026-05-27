@@ -1,0 +1,135 @@
+.ebl-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+    .ebl-radio__circle {
+      opacity: 0.6;
+    }
+    .ebl-radio__label {
+      color: var(--text-disabled, #bcc7d4);
+    }
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  &__circle {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    color: #1976d2;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: #fff;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--primary {
+      color: #1976d2;
+      border-color: var(--border-input-normal, #bcc7d4);
+    }
+
+    &--subtle {
+      border-color: var(--border-input-normal, #bcc7d4);
+      color: var(--bg-surface-subtle-normal, #ebf0f5);
+    }
+
+    &--inverse {
+      border-color: var(--border-accent-darkneutral, #121a26);
+      color: var(--text-inverse-normal, #ffffff);
+      background: var(--bg-surface-inverse-normal, #121a26);
+    }
+
+    &--ghost {
+      border-color: var(--border-input-normal, #bcc7d4);
+      background: transparent;
+    }
+  }
+
+  &__inner-circle {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    transition: all 0.2s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__label {
+    color: var(--text-normal, #121a26);
+    /* Desktop/body2/regular */
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+    cursor: pointer;
+  }
+
+  // Hover states
+  &:not(.ebl-radio--disabled):hover {
+    .ebl-radio__circle {
+      border-color: var(--border-input-hovered, #9ba9ba);
+    }
+  }
+
+  // Focus states
+  .ebl-radio__input:focus-visible + .ebl-radio__circle {
+    outline: 2px solid var(--border-focused-normal, #295bff);
+    outline-offset: 2px;
+  }
+
+  // Checked states
+  .ebl-radio__input:checked + .ebl-radio__circle {
+    border-color: currentColor;
+    background: currentColor;
+
+    .ebl-radio__inner-circle {
+      background: #fff;
+    }
+
+    &--primary {
+      color: #1976d2;
+    }
+
+    &--subtle {
+      color: var(--bg-surface-subtle-normal, #ebf0f5);
+      .ebl-radio__inner-circle {
+        background: var(--text-normal, #121a26);
+      }
+    }
+
+    &--inverse {
+      color: var(--text-inverse-normal, #ffffff);
+      background: var(--bg-surface-inverse-normal, #121a26);
+      .ebl-radio__inner-circle {
+        background: var(--text-inverse-normal, #ffffff);
+      }
+    }
+
+    &--ghost {
+      background: transparent;
+      .ebl-radio__inner-circle {
+        background: currentColor;
+      }
+    }
+  }
+}

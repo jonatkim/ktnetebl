@@ -1,0 +1,80 @@
+{
+  "common": {
+    "lang": {
+      "lang": "Language",
+      "ko": "Korean",
+      "en": "English"
+    }
+  },
+  "i18nGuide": {
+    "title": "i18n Guide",
+    "description": "Simple i18n locale switching guide.",
+    "currentLocale": "Current Language",
+    "changeLocale": "Change Language",
+    "samples": {
+      "greeting": "Hello!",
+      "welcome": "Welcome to the eBL Platform.",
+      "feature": "When you change the locale, all text updates automatically.",
+      "nextStep": "Later you can add features such as app (browser) sync and cookie persistence."
+    },
+    "buttons": {
+      "selectKorean": "Set to Korean",
+      "selectEnglish": "Set to English"
+    }
+  },
+  "portal": {
+    "home": {
+      "sections": {
+        "purely": {
+          "title": "Purely Digital, Fully Connected.",
+          "desc": [
+            { "text": "The integrity of trade, encapsulated in" },
+            { "text": "a digital envelope", "hasShip": true },
+            { "text": "flowing unbroken from the moment of" },
+            { "text": "creation to its final delivery" }
+          ]
+        },
+        "defined": {
+          "title": "Defined at the Origin",
+          "subtitle": "Digital Issuance",
+          "desc": [
+            { "text": "The moment data is born with" },
+            { "text": "absolute integrity", "hasShip": true },
+            { "text": "the first record of digital trade begins" },
+            { "text": "here" }
+          ]
+        },
+        "seamless": {
+          "title": "Seamless Orbit",
+          "subtitle": "Transmission Chain",
+          "desc": [
+            { "text": "Ownership encapsulated in a digital" },
+            { "text": "envelope", "hasShip": true },
+            { "text": "flowing seamlessly, amplified and" },
+            { "text": "perfected by global stakeholder" }
+          ]
+        },
+        "screen": {
+          "title": "Screen to Hand",
+          "subtitle": "Materialization",
+          "desc": [
+            { "text": "Bridging to existing business" },
+            { "text": "environments", "hasShip": true },
+            { "text": "supporting seamless integration with" },
+            { "text": "diverse processes on demand" }
+          ]
+        },
+        "absolute": {
+          "title": "Absolute Fulfillment",
+          "subtitle": "Finalization",
+          "desc": [
+            { "text": "Realizing ultimate fulfillment of trade" },
+            { "text": "value", "hasShip": true },
+            { "text": "securing the final cargo release and" },
+            { "text": "completing the entire digital journey" }
+          ]
+        }
+      }
+    }
+  }
+}

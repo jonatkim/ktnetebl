@@ -1,0 +1,165 @@
+.ebl-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+    .ebl-switch__thumb,
+    .ebl-switch__label {
+      opacity: 0.5;
+    }
+    &.ebl-switch--checked {
+      .ebl-switch__track {
+        opacity: 0.5;
+      }
+      .ebl-switch__thumb {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__track {
+    position: relative;
+    display: inline-block;
+    border-radius: 12px;
+    background: var(--bg-surface-subtle-normal, #e5e7eb);
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+    color: currentColor;
+  }
+
+  &__thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &__label {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-normal, #1f2937);
+  }
+
+  // Size variants
+  // 계산식: translateX = track.width - thumb.width - padding
+  //        top = (track.height - thumb.height) / 2
+  &--sm {
+    .ebl-switch__track {
+      width: 26px;
+      height: 16px;
+    }
+    .ebl-switch__thumb {
+      width: 12px;
+      height: 12px;
+      top: 2px;
+      left: 2px;
+    }
+    &.ebl-switch--checked .ebl-switch__thumb {
+      // 26 - 12 - 2 = 12px, left 2px 제거 = 12 - 2 = 10px
+      transform: translateX(10px);
+    }
+  }
+
+  &--md {
+    .ebl-switch__track {
+      width: 32px;
+      height: 20px;
+    }
+    .ebl-switch__thumb {
+      width: 14px;
+      height: 14px;
+      top: 3px;
+      left: 3px;
+    }
+    &.ebl-switch--checked .ebl-switch__thumb {
+      // 32 - 14 - 3 = 15px, left 3px 제거 = 15 - 3 = 12px
+      transform: translateX(12px);
+    }
+  }
+
+  &--lg {
+    .ebl-switch__track {
+      width: 40px;
+      height: 24px;
+    }
+    .ebl-switch__thumb {
+      width: 18px;
+      height: 18px;
+      top: 3px;
+      left: 3px;
+    }
+    &.ebl-switch--checked .ebl-switch__thumb {
+      // 40 - 18 - 3 = 19px, left 3px 제거 = 19 - 3 = 16px
+      transform: translateX(16px);
+    }
+  }
+
+  // Color variants - 모든 상태에서 사용
+  &--primary .ebl-switch__track {
+    color: var(--bg-surface-checked, #295bff);
+  }
+  &--blue .ebl-switch__track {
+    color: var(--bg-accent-blue-normal, #295bff);
+  }
+  &--red .ebl-switch__track {
+    color: var(--bg-accent-red-normal, #ff1c1c);
+  }
+  &--mint .ebl-switch__track {
+    color: var(--bg-accent-mint-normal, #1acead);
+  }
+  &--amber .ebl-switch__track {
+    color: var(--bg-accent-amber-normal, #ffc72c);
+  }
+  &--pink .ebl-switch__track {
+    color: var(--bg-accent-pink-normal, #ff6b9d);
+  }
+  &--violet .ebl-switch__track {
+    color: var(--bg-accent-violet-normal, #9b51e0);
+  }
+  &--black .ebl-switch__track {
+    color: var(--bg-surface-inverse-normal, #121a26);
+  }
+
+  // Checked state
+  &--checked .ebl-switch__track {
+    background: currentColor;
+  }
+
+  // Hover effect
+  &:not(&--disabled):hover .ebl-switch__thumb {
+    transform: scale(1.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  &:not(&--disabled):hover.ebl-switch--checked {
+    &.ebl-switch--sm .ebl-switch__thumb {
+      transform: translateX(10px) scale(1.2);
+    }
+    &.ebl-switch--md .ebl-switch__thumb {
+      transform: translateX(12px) scale(1.2);
+    }
+    &.ebl-switch--lg .ebl-switch__thumb {
+      transform: translateX(16px) scale(1.2);
+    }
+  }
+
+  // Focus style
+  &__input:focus-visible + .ebl-switch__track {
+    outline: 2px solid var(--border-focus, #476dfc);
+    outline-offset: 2px;
+  }
+}

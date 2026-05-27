@@ -1,0 +1,26 @@
+// AG Grid 테마 CSS 변수 전역 설정
+:root {
+  --ag-accent-color: #295bff;
+  --ag-border-color: #dce3eb;
+  --ag-foreground-color: #121a26;
+  --ag-header-background-color: #f5f7fa;
+  --ag-cell-horizontal-padding: 12px;
+  --ag-grid-size: 8px;
+  --ag-font-family: 'Pretendard';
+  --ag-font-size: 14px;
+}
+
+// columnBorder false 효과를 위해
+.ag-root-wrapper {
+  --ag-border-color: transparent;
+  --ag-font-family: 'Pretendard';
+  --ag-cell-font-family: 'Pretendard';
+}
+
+.ag-header-cell-separator {
+  display: none;
+}
+
+.ag-cell {
+  border-right: none;
+}

@@ -1,0 +1,85 @@
+$tooltip-background-color: var(--bg-surface-inverse-normal, #121a26);
+$tooltip-text-color: var(--text-inverse-normal, #fff);
+$tooltip-padding: 4px 8px;
+$tooltip-border-radius: 4px;
+$tooltip-font-size: 0.75rem; // 12px
+$tooltip-line-height: 1.5; // 18px
+$tooltip-overflow-wrap: break-word;
+
+.v-tooltip > .v-overlay__content.ebl-tooltip {
+  padding: $tooltip-padding;
+  background: $tooltip-background-color;
+  color: $tooltip-text-color;
+  border-radius: $tooltip-border-radius;
+  font-size: $tooltip-font-size;
+  line-height: $tooltip-line-height;
+  font-weight: 400;
+  overflow-wrap: $tooltip-overflow-wrap;
+  word-break: break-word;
+  white-space: pre-wrap;
+
+  // 화살표 (말풍선 꼬리)
+  &::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: $tooltip-background-color;
+    transform: rotate(45deg);
+  }
+
+  // transform-origin 기준으로 화살표 위치 설정
+  // 우선순위: 구체적인 조합 → 일반 방향
+
+  // Top Left (top start)
+  &[style*='transform-origin: left bottom']::before {
+    bottom: -4px;
+    left: 10px;
+  }
+
+  // Top Center
+  &[style*='transform-origin: center bottom']::before {
+    bottom: -4px;
+    left: 50%;
+    margin-left: -4px;
+  }
+
+  // Top Right (top end)
+  &[style*='transform-origin: right bottom']::before {
+    bottom: -4px;
+    right: 10px;
+  }
+
+  // Bottom Left (bottom start)
+  &[style*='transform-origin: left top']::before {
+    top: -4px;
+    left: 10px;
+  }
+
+  // Bottom Center
+  &[style*='transform-origin: center top']::before {
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
+  }
+
+  // Bottom Right (bottom end)
+  &[style*='transform-origin: right top']::before {
+    top: -4px;
+    right: 10px;
+  }
+
+  // Left Center
+  &[style*='transform-origin: right center']::before {
+    right: -4px;
+    top: 50%;
+    margin-top: -4px;
+  }
+
+  // Right Center
+  &[style*='transform-origin: left center']::before {
+    left: -4px;
+    top: 50%;
+    margin-top: -4px;
+  }
+}

@@ -1,0 +1,51 @@
+// =============================================
+// Global Dialog (VDialog wrapper)
+// =============================================
+.v-dialog > .v-overlay__content.ebl-global-dialog {
+  .ebl-global-dialog--card {
+    border-radius: 20px;
+    border: 1px solid var(--border-normal, #dce3eb);
+    background: var(--bg-surface-raised, #fff);
+    .v-card {
+      &-title {
+        display: flex;
+        align-items: center;
+        padding: 24px 24px 0;
+        color: var(--text-normal, #121a26);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        & + .v-card-text {
+          padding-top: 4px;
+        }
+      }
+      &-text {
+        padding: 24px;
+        color: var(--text-subtle, #3b4a5e);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px; /* 142.857% */
+      }
+      &-actions {
+        padding: 0 24px 24px;
+        gap: 8px;
+      }
+    }
+  }
+}
+
+.ebl-mo {
+  .v-overlay__content.ebl-global-dialog .ebl-global-dialog--card {
+    .v-card-text {
+      color: var(--text-normal, #121a26);
+    }
+    .v-card-actions {
+      gap: 12px;
+      padding-top: 8px;
+      .ebl-btn {
+        height: 44px;
+      }
+    }
+  }
+}

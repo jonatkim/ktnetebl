@@ -1,0 +1,45 @@
+<svg width="1920" height="440" viewBox="0 0 1920 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_4018_105655" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="440">
+<rect width="1920" height="440" fill="url(#paint0_linear_4018_105655)"/>
+</mask>
+<g mask="url(#mask0_4018_105655)">
+<g opacity="0.2">
+<path d="M840 -45.625L720 23.75V-45.625H840Z" stroke="white" stroke-linejoin="round"/>
+<path d="M960 -45.625L840 23.75V-45.625H960Z" stroke="white" stroke-linejoin="round"/>
+<path d="M480 -115L720 23.75H480V-115Z" stroke="white" stroke-linejoin="round"/>
+<path d="M720 162.5V23.75L480 162.5H720Z" stroke="white" stroke-linejoin="round"/>
+<path d="M720 23.75V162.5L960 23.75H720Z" stroke="white" stroke-linejoin="round"/>
+<path d="M480 23.75V-115L240 23.75H480Z" stroke="white" stroke-linejoin="round"/>
+<path d="M0 -115L240 23.75H0V-115Z" stroke="white" stroke-linejoin="round"/>
+<path d="M0 23.75L240 162.5V23.75H0Z" stroke="white" stroke-linejoin="round"/>
+<path d="M480 162.5L240 23.75V162.5H480Z" stroke="white" stroke-linejoin="round"/>
+<path d="M0 440L480 162.5H0V440Z" stroke="white" stroke-linejoin="round"/>
+<path d="M960 301.25V162.5L720 301.25H960Z" stroke="white" stroke-linejoin="round"/>
+<path d="M480 162.5V301.25H720L480 162.5Z" stroke="white" stroke-linejoin="round"/>
+<path d="M720 440L480 301.25V440H720Z" stroke="white" stroke-linejoin="round"/>
+<path d="M720 301.25H960L720 440V301.25Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1680 23.75V-115L1920 23.75H1680Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1680 23.75L1440 -115V23.75H1680Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1440 162.5H1680L1440 23.75V162.5Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1920 23.75V162.5L1680 23.75H1920Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1440 -115L1200 23.75V-115H1440Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1200 23.75V-115L960 23.75H1200Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1200 23.75L1080 93.125H1200V23.75Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1080 93.125L960 23.75V93.125H1080Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1080 162.5L960 93.125H1080V162.5Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1200 162.5L1080 93.125V162.5H1200Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1440 162.5V23.75L1200 162.5H1440Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1440 162.5V301.25H1200L1440 162.5Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1200 301.25H960V162.5L1200 301.25Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1200 440L960 301.25H1200V440Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1200 440L1440 301.25H1200V440Z" stroke="white" stroke-linejoin="round"/>
+<path d="M1440 162.5V440H1920L1440 162.5Z" stroke="white" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_4018_105655" x1="960" y1="0" x2="960" y2="440" gradientUnits="userSpaceOnUse">
+<stop stop-color="#11113A" stop-opacity="0"/>
+<stop offset="1" stop-color="#07FF00"/>
+</linearGradient>
+</defs>
+</svg>

@@ -1,0 +1,342 @@
+﻿// EblBtn 스타일: 공통 → 내부요소 → variant → 사이즈 → 아이콘 → 기타 → outlined/pill/disabled 순서, 중복 없이 정리
+.ebl-btn {
+  // 공통
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  font-weight: 500;
+  outline: none;
+  user-select: none;
+  border: none;
+  border-radius: 8px;
+  background: var(--palette-neutral-20);
+  color: var(--palette-neutral-100);
+  line-height: normal;
+  font-size: 12px;
+  height: 32px;
+  min-width: 72px;
+  padding: 0 12px;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+  max-width: 100%;
+
+  // 내부 요소
+  .ebl-btn__content {
+    white-space: nowrap;
+  }
+  .ebl-btn__prepend,
+  .ebl-btn__append {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  // Variant
+  &--primary {
+    background: var(--palette-blue-60, #295bff);
+    color: #fff;
+    &:hover {
+      background: var(--palette-blue-70, #1f45cc);
+    }
+    &:active {
+      background: var(--palette-blue-80, #143099);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      background: var(--palette-neutral-40, #bcc7d4);
+      color: #b0b8c1;
+    }
+  }
+  &--subtle {
+    background: var(--palette-neutral-20);
+    color: var(--palette-neutral-100);
+    &:hover {
+      background: var(--palette-neutral-30);
+    }
+    &:active {
+      background: var(--palette-neutral-40, #bcc7d4);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      background: var(--palette-neutral-20);
+      color: #b0b8c1;
+    }
+  }
+  &--inverse {
+    background: var(--palette-neutral-100);
+    color: #fff;
+    &:hover {
+      background: var(--palette-neutral-90);
+    }
+    &:active {
+      background: var(--palette-neutral-80);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      background: var(--palette-neutral-40);
+      color: #b0b8c1;
+    }
+  }
+  &--ghost {
+    background: var(--palette-neutralalphablack-0);
+    color: var(--palette-neutral-100);
+    &:hover {
+      background: var(--palette-neutralalphablack-5);
+    }
+    &:active {
+      background: var(--palette-neutralalphablack-10);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      background: var(--palette-neutralalphablack-0);
+      color: #b0b8c1;
+    }
+  }
+  &--cta {
+    background: var(--bg-highlight-normal, #0ee50f);
+    color: var(--text-normal, #121a26);
+    &:hover {
+      background: var(--bg-highlight-hovered, #0cc00d);
+    }
+    &:active {
+      background: var(--bg-highlight-pressed, #089109);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      background: var(--bg-primary-disabled, #bcc7d4);
+      color: var(--text-inverse-disabled, rgba(255, 255, 255, 0.4));
+    }
+  }
+  &--tertiary {
+    background: var(--bg-surface-inverse-normal, #121a26);
+    color: var(--text-inverse-normal, #fff);
+    &:hover {
+      background: var(--bg-surface-inverse-hovered, #253142);
+    }
+    &:active {
+      background: var(--bg-surface-inverse-pressed, #3b4a5e);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      background: var(--bg-primary-disabled, #bcc7d4);
+      color: var(--text-inverse-subtlest, rgba(255, 255, 255, 0.6));
+    }
+  }
+  &--danger {
+    border: 1px solid var(--border-normal, #dce3eb);
+    background: var(--bg-surface-normal, #fff);
+    color: var(--text-feedback-danger-normal, #ff1c1c);
+    &:hover {
+      background: var(--bg-surface-hovered, #f5f7fa);
+    }
+    &:active {
+      background: var(--bg-surface-pressed, #ebf0f5);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      background: var(--bg-primary-disabled, #bcc7d4);
+      color: var(--text-inverse-subtlest, rgba(255, 255, 255, 0.6));
+    }
+  }
+
+  // 사이즈
+  &--small {
+    height: 28px;
+    font-size: 11px;
+    min-width: 48px;
+    padding: 0 8px;
+    border-radius: 6px;
+    gap: 4px;
+    .ebl-btn__prepend,
+    .ebl-btn__append {
+      gap: 4px;
+    }
+    .v-icon {
+      font-size: 12px;
+    }
+  }
+  &--medium {
+    height: 36px;
+    font-size: 14px;
+    min-width: 64px;
+    padding: 0 12px;
+    border-radius: 8px;
+    gap: 8px;
+    .ebl-btn__prepend,
+    .ebl-btn__append {
+      gap: 8px;
+    }
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+  &--large {
+    height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 80px;
+    padding: 0 32px;
+    border-radius: 8px;
+    gap: 8px;
+    .ebl-btn__prepend,
+    .ebl-btn__append {
+      gap: 8px;
+    }
+    .v-icon {
+      font-size: 20px;
+    }
+  }
+
+  // 아이콘
+  &--icon {
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    .v-icon {
+      margin: 0 auto;
+      display: flex;
+    }
+  }
+  &--large.ebl-btn--icon {
+    width: 40px;
+    height: 40px;
+  }
+  &--small.ebl-btn--icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  // 기타
+  &--text {
+    background: transparent;
+    color: inherit;
+    box-shadow: none;
+    border: none;
+    font-weight: 500;
+    &:hover {
+      background: #f2f6ff;
+    }
+  }
+  &--block {
+    width: 100%;
+    display: flex;
+  }
+
+  // outlined, pill, disabled (항상 마지막)
+  &--outlined {
+    // 색상 미지정(기본)
+    border: 1px solid var(--border-normal, #dce3eb);
+    background: var(--bg-surface-normal, #fff);
+    color: var(--text-subtle, #52637a);
+    box-shadow: none;
+    &:hover {
+      border: 1px solid var(--border-bolder, #bcc7d4);
+      background: var(--bg-surface-hovered, #f5f7fa);
+      color: var(--text-subtle, #52637a);
+    }
+    &:active {
+      border: 1px solid var(--border-normal, #dce3eb);
+      background: var(--bg-surface-pressed, #ebf0f5);
+      color: var(--text-subtle, #52637a);
+    }
+    &[disabled],
+    &.ebl-btn--disabled {
+      border: 1px solid var(--border-normal, #dce3eb);
+      background: var(--bg-surface-disabled, #f5f7fa);
+      color: #b0b8c1;
+    }
+    .v-icon,
+    .ebl-btn__prepend,
+    .ebl-btn__append {
+      color: inherit;
+    }
+  }
+  &--pill {
+    border-radius: 9999px !important;
+    &.ebl-btn--small {
+      padding: 0 12px;
+    }
+    &.ebl-btn--medium {
+      padding: 0 16px;
+    }
+    &.ebl-btn--large {
+      padding: 0 20px;
+    }
+  }
+  &[disabled],
+  &--disabled {
+    background: var(--palette-neutral-20);
+    color: #b0b8c1;
+    cursor: not-allowed;
+    border-color: var(--palette-neutral-30);
+  }
+}
+
+.ebl-mo {
+  .ebl-btn {
+    height: 40px;
+    padding: 0 32px;
+    gap: 8px;
+    border-radius: 8px;
+
+    &--small {
+      height: 36px;
+    }
+    &--large {
+      height: 56px;
+      min-width: 96px;
+      padding: 0 32px;
+      font-weight: 700;
+    }
+    &--icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      .v-icon {
+        margin: 0 auto;
+        display: flex;
+      }
+    }
+    // &--small.ebl-btn--icon {
+    //   width: 32px;
+    //   height: 32px;
+    // }
+    // &--large.ebl-btn--icon {
+    //   width: 48px;
+    //   height: 48px;
+    // }
+  }
+}
+
+// Mobile responsive, 포탈서비스페이지는 미디어쿼리로적용
+@media (max-width: 960px) {
+  .ebl-btn {
+    height: 40px;
+    padding: 0 32px;
+    gap: 8px;
+    border-radius: 8px;
+
+    &--small {
+      height: 36px;
+    }
+    &--large {
+      height: 56px;
+      min-width: 96px;
+      padding: 0 32px;
+      font-weight: 700;
+    }
+    &--icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      .v-icon {
+        margin: 0 auto;
+        display: flex;
+      }
+    }
+  }
+}
