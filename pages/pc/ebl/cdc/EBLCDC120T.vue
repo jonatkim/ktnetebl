@@ -13,7 +13,6 @@
         <h2>Total</h2>
         <span class="count">{{ formatNumber(filteredRowData.length) }}</span>
       </EblSubHeader>
-
       <!-- 필터 영역 -->
       <div class="ebl-page-filters">
         <EblInput
@@ -44,11 +43,11 @@
           v-model="filters.dateRange"
           range
           clearable
-          auto-apply
-          placeholder="Received Date"
+          placeholder="Send Date"
           :start-date="filters.dateRange?.[0]"
           :focus-start-date="true"
           style="width: 260px"
+          auto-apply
         />
         <EblBtn outlined @click="applyFilters">Search</EblBtn>
         <EblBtn icon="ebli:refresh" outlined @click="resetFilters" />
@@ -79,7 +78,7 @@
             :bl-status="item.blStatus"
             :transaction-status="item.transactionStatus"
             :routing="item.routing"
-            :received-date="item.receivedDate"
+            :received-date="item.sendDate"
             :dg="item.dg"
             @click="onGridItemClick(item)"
           />
@@ -91,7 +90,6 @@
           <p class="nodata-desc">No data matches your current filter settings.</p>
           <p class="nodata-desc">Please try adjusting your filters or date range.</p>
         </div>
-
       </template>
 
       <!-- Pagination -->
@@ -140,26 +138,25 @@
               </div>
             </div>
 
-            <div class="ebl-card-linear py-5 px-6 mb-6">
+            <div class="ebl-card-linear py-5 px-6 mb-3">
               <EblInfoItem vertical label="Recipient" content-class="py-0">
+                <template #label>
+                  <span class="ebl-info-item__label-text small">Recipient</span>
+                </template>
                 <EblAvatarLabel
                   logo="https://i.pravatar.cc/150?img=1"
                   title="KTNETEBL1"
                   subtitle="338, Pangyo-ro, Bundang-gu, Seongnam-si, Gyeonggi-do, KR"
                   title-first
-                  avatar-bg="#ffffff"
                 />
               </EblInfoItem>
             </div>
+            <!--2026.06.24 items 수정-->
             <EblTabs
               v-model="detailTab"
-              :items="[
-                { value: 'blInfo', label: 'B/L Info' },
-                { value: 'containerInfo', label: 'Container Info' },
-                { value: 'tAndCInfo', label: 'T&C Info' },
-              ]"
+              :items="detailTabItems"
               size="lg"
-              class="mb-5"
+              class="pt-4 mb-5"
             />
             <template v-if="detailTab === 'blInfo'">
               <VExpansionPanels
@@ -404,7 +401,7 @@
                       <div class="ebl-detail__item">
                         <div class="ebl-detail__label">Description of Goods</div>
                         <div class="ebl-detail__text">
-                          "SHIPPER'S LOAD, COUNT, SEALED & WEIGHT S.T.C"<br />
+                          “SHIPPER'S LOAD, COUNT, SEALED & WEIGHT S.T.C”<br />
                           1 X 40''H DV CONTAINER<br />
                           303 PACKAGES<br />
                           HMMU6431138 / 24H0354452 / 40HC / 30 3PKG / 21183.47 KGS / 60.548 CBM<br />
@@ -420,13 +417,13 @@
               </VExpansionPanels>
             </template>
             <template v-else-if="detailTab === 'containerInfo'">
-              <div class="ebl-card-linear d-flex" style="height: 634px">
+              <div class="ebl-card-linear d-flex" style="height: 700px">
                 <EblContainerList
                   v-model="selectedContainer"
                   :list="containerList"
                   class="border-right"
                 />
-                <div class="flex-1 pa-5">
+                <div class="flex-1 pa-5 ebl-scrollbar" style="overflow-y: auto">
                   <template v-if="selectedContainer">
                     <EblInfo>
                       <EblInfoItem label="Container No">{{
@@ -452,6 +449,9 @@
                       }}</EblInfoItem>
                       <EblInfoItem label="DG Name">{{ selectedContainer.dgName }}</EblInfoItem>
                       <EblInfoItem label="IMDG">{{ selectedContainer.imdg }}</EblInfoItem>
+                      <EblInfoItem label="Shipping Marks">{{
+                        selectedContainer.shippingMarks
+                      }}</EblInfoItem>
                     </EblInfo>
                   </template>
                   <template v-else>
@@ -463,6 +463,14 @@
                     </div>
                   </template>
                 </div>
+              </div>
+            </template>
+            <template v-else-if="detailTab === 'dgInfo'">
+              <!--2026.06.24 테스트-->
+              <div class="pa-4 text-center">
+                <EblBtn color="primary" large @click="dgSubPanelOpen = true">
+                  DG Verification Guide Open
+                </EblBtn>
               </div>
             </template>
             <template v-else-if="detailTab === 'tAndCInfo'">
@@ -500,14 +508,16 @@
           </VCardText>
 
           <VCardActions class="ebl-dialog__actions">
+            <EblBtn outlined large @click="toggleBlData">B/L Data</EblBtn>
+            
             <EblBtn outlined large @click="togglePreview">Preview</EblBtn>
-            <VSpacer />
+            
             <EblBtn outlined large @click="toggleTransactionStatus">eBL Transaction</EblBtn>
           </VCardActions>
         </VCard>
         <!-- Transaction Status Dialog -->
         <VSlideXReverseTransition leave-absolute>
-          <VCard v-if="transactionStatusOpen" width="914" class="ebl-dialog__card">
+          <VCard v-if="transactionStatusOpen" width="700" class="ebl-dialog__card">
             <VCardTitle class="ebl-dialog__header">
               <span class="title">Transaction Status</span>
               <VSpacer />
@@ -521,8 +531,8 @@
                 <colgroup>
                   <col />
                   <col />
-                  <col width="220px" />
-                  <col width="220px" />
+                  <col width="117px" />
+                  <col width="117px" />
                   <col width="52px" />
                 </colgroup>
                 <thead>
@@ -552,6 +562,7 @@
                           logo="https://i.pravatar.cc/150?img=1"
                           :title="row.actor"
                           title-first
+                          class="line-2"
                         />
                       </td>
                       <td class="ebl-table-grid__cell">
@@ -561,6 +572,7 @@
                           logo="https://i.pravatar.cc/150?img=1"
                           :title="row.recipient"
                           title-first
+                          class="line-2"
                         />
                       </td>
                       <td class="ebl-table-grid__cell ebl-table-grid__cell--toggle">
@@ -588,7 +600,7 @@
               </table>
             </VCardText>
           </VCard>
-          <VCard v-if="previewOpen" width="700" class="ebl-dialog__card">
+          <VCard v-if="previewOpen" width="600" class="ebl-dialog__card">
             <VCardTitle class="ebl-dialog__header">
               <span class="title">eBL Preview</span>
               <VSpacer />
@@ -601,6 +613,107 @@
               <EblBtn color="cta" large>Download</EblBtn>
             </VCardActions>
           </VCard>
+          <!--2026.06.24 소스보기 패널 추가-->
+          <VCard v-if="bldataOpen" width="700" class="ebl-dialog__card">
+            <VCardTitle class="ebl-dialog__header">
+              <span class="title">B/L Data Details</span>
+              <VSpacer />
+              <EblBtn icon pill small @click="bldataOpen = false">
+                <VIcon icon="ebli:close" :size="20" />
+              </EblBtn>
+            </VCardTitle>
+            <VCardText class="ebl-dialog__text overflow-y-auto">
+              <ClientOnly>
+                <div class="ebl-json-viewer-container pa-6">
+                  <json-viewer
+                    :value="blEdiRawData"
+                    :expanded="true"
+                    :expand-depth="99"
+                    :copyable="false"
+                    :boxed="false"
+                    sort
+                    theme="dark"
+                  />
+                </div>
+                
+                <template #fallback>
+                  <div class="d-flex justify-center align-center py-8">
+                    <VProgressCircular indeterminate color="primary" />
+                  </div>
+                </template>
+              </ClientOnly>
+            </VCardText>
+              <VCardActions class="px-6 pb-6 pt-2 d-flex justify-end">
+                <EblBtn 
+                  color="success" 
+                  large 
+                  class="px-8 text-weight-bold ebl-pub-copy-btn"
+                  @click="handleJsonCopy"
+                >
+                  Copy
+                </EblBtn>
+              </VCardActions>
+          </VCard>
+          <!--2026.06.24 패널 추가-->
+          <VCard v-if="dgSubPanelOpen" width="700" class="ebl-dialog__card">
+            <VCardTitle class="ebl-dialog__header">
+              <span class="title">Dangerous Cargo Details</span>
+              <VSpacer />
+              <EblBtn icon pill small @click="dgSubPanelOpen = false">
+                <VIcon icon="ebli:close" :size="20" />
+              </EblBtn>
+            </VCardTitle>
+
+            <VCardText class="ebl-dialog__text overflow-y-auto">
+              <div class="ebl-card-linear d-flex" style="height: 700px">
+                <EblContainerList
+                  v-model="selectedContainer"
+                  :list="containerList"
+                  class="border-right"
+                />
+                <div class="flex-1 pa-5 ebl-scrollbar" style="overflow-y: auto">
+                  <template v-if="selectedContainer">
+                    <EblInfo>
+                      <EblInfoItem label="Container No">{{
+                        selectedContainer.containerNo
+                      }}</EblInfoItem>
+                      <EblInfoItem label="Seal No">{{ selectedContainer.sealNo }}</EblInfoItem>
+                      <EblInfoItem label="Size / Type">{{
+                        selectedContainer.sizeType
+                      }}</EblInfoItem>
+                      <EblInfoItem label="PKG / Unit">{{ selectedContainer.pkgUnit }}</EblInfoItem>
+                      <EblInfoItem label="Gross Weight"
+                        >{{ selectedContainer.grossWeight }} / MTQ</EblInfoItem
+                      >
+                      <EblInfoItem label="Tare">{{ selectedContainer.tare }}</EblInfoItem>
+                      <EblInfoItem label="VGM">{{ selectedContainer.netWeight }}</EblInfoItem>
+                      <EblInfoItem label="Volume / Unit">{{
+                        selectedContainer.volumeUnit
+                      }}</EblInfoItem>
+                      <EblInfoItem label="S/C">{{ selectedContainer.sc }}</EblInfoItem>
+                      <EblInfoItem label="RF">{{ selectedContainer.rf }}</EblInfoItem>
+                      <EblInfoItem label="Temp / Unit">{{
+                        selectedContainer.tempUnit
+                      }}</EblInfoItem>
+                      <EblInfoItem label="DG Name">{{ selectedContainer.dgName }}</EblInfoItem>
+                      <EblInfoItem label="IMDG">{{ selectedContainer.imdg }}</EblInfoItem>
+                      <EblInfoItem label="Shipping Marks">{{
+                        selectedContainer.shippingMarks
+                      }}</EblInfoItem>
+                    </EblInfo>
+                  </template>
+                  <template v-else>
+                    <div
+                      class="text-center py-5"
+                      style="color: var(--text-subtle); padding-top: 150px"
+                    >
+                      Select a container to view details
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </VCardText>
+          </VCard>
         </VSlideXReverseTransition>
       </EblDialog>
     </div>
@@ -612,44 +725,156 @@ import { useFormat } from '~/composables/useFormat'
 import { AgGridVue } from 'ag-grid-vue3'
 import CompanyNameCellRenderer from '~/components/grid/CompanyNameCellRenderer.vue'
 import BadgeCellRenderer from '~/components/grid/BadgeCellRenderer.vue'
+import EblBtnCellRenderer from '~/components/grid/EblBtnCellRenderer.vue'
 import RoutingCodeCellRenderer from '~/components/grid/RoutingCodeCellRenderer.vue'
 import EblGridViewItem from '~/components/grid/EblGridViewItem.vue'
 
+// Composables
 const { formatNumber } = useFormat()
+
+// 상태 관리 - 그리드 & 다이얼로그
 const gridApi = shallowRef(null)
 const dialogOpen = ref(false)
+// 상태 - 뷰 & 탭 선택
 const activeTab = ref('list')
 const statusTab = ref('_all')
 const detailTab = ref('blInfo')
 const blInfoPanels = ref(1)
+
+// 상태 - 다이얼로그 표시 여부
 const transactionStatusOpen = ref(false)
 const previewOpen = ref(false)
+const bldataOpen = ref(false)
+
+// Transaction Status Table
+const createTransactionRow = (id, overrides = {}) => ({
+  id,
+  status: 'ISSU',
+  lastUpdate: '2025-09-01 15:15:00',
+  actor: 'Hyundai Merchant Marine',
+  actorInitials: 'HM',
+  recipient: 'KTNETEBL1',
+  recipientInitials: 'KT',
+  details: ['[발행 완료] Comment : 발행이 완료되었습니다.'],
+  ...overrides,
+})
+
+const randomPick = (list) => list[Math.floor(Math.random() * list.length)]
+
+const createRandomTransactions = (count) => {
+  const statuses = ['ISSU', 'SREJ', 'ENDORSE TO ORDER', 'SACC']
+  const actors = [
+    { name: 'Hyundai Merchant Marine', initials: 'HM' },
+    { name: 'KTNETEBL1', initials: 'KT' },
+  ]
+  const recipients = [
+    { name: 'KTNETEBL1', initials: 'KT' },
+    { name: 'CJ Logistics Corporation', initials: 'CJ' },
+  ]
+  const comments = [
+    '[발행 완료] Comment : 발행이 완료되었습니다.',
+    '[서렌더 요청 거절] Comment : 서렌더 요청이 거절되었습니다.',
+    '[양도 완료] Comment : Endorse to order 처리되었습니다.',
+    '[서렌더 요청 승인] Comment : 서렌더 요청이 승인되었습니다.',
+  ]
+
+  return Array.from({ length: count }).map((_, index) => {
+    const actor = randomPick(actors)
+    const recipient = randomPick(recipients)
+    const detailCount = Math.floor(Math.random() * 2) + 1
+    const details = Array.from({ length: detailCount }).map(() => randomPick(comments))
+
+    return createTransactionRow(index + 1, {
+      status: randomPick(statuses),
+      actor: actor.name,
+      actorInitials: actor.initials,
+      recipient: recipient.name,
+      recipientInitials: recipient.initials,
+      details,
+    })
+  })
+}
+
+const transactionRows = createRandomTransactions(30)
+
+const openTransactionRowId = ref(null)
+
+const isTransactionRowOpen = (id) => openTransactionRowId.value === id
+
+const toggleTransactionRow = (id) => {
+  openTransactionRowId.value = openTransactionRowId.value === id ? null : id
+}
+
+const computedTransactions = computed(() =>
+  transactionRows.map((row) => ({
+    ...row,
+    isOpen: isTransactionRowOpen(row.id),
+  })),
+)
+
+// 상태 - 선택된 항목
 const detailRow = ref(null)
 const selectedContainer = ref(null)
 
-// 페이지 정보
+// 더미 텍스트 데이터
+const dummyText = `"SHIPPER'S LOAD, COUNT, SEALED & WEIGHT S.T.C"
+1 X 40'H DV CONTAINER
+303 PACKAGES
+HMMU6431138 / 24H0354452 / 40HC / 30 3PKG / 21183.47 KGS / 60.548 CBM
+BLUE BACKPACK LB MOCHILA DAV
+PO.102286561-10 SAP 210106103 590 PCS
+MARCA : LABEL
+Total Number of Container or Packages(in words) : ONE(1) CONTAINER ONLY`
+
+// 폼 데이터
+const additionalTC = ref(dummyText)
+const additionalComment = ref(dummyText)
+
+// 페이지 설정
 const pageInfo = ref({
-  title: 'Archive',
-  breadcrumbItems: [{ text: 'Documents' }, { text: 'Archive' }],
+  title: 'Sent',
+  breadcrumbItems: [{ text: 'Documents' }, { text: 'Sent' }],
 })
 
-// 보기 탭 (List/Grid)
+// 탭 항목 설정
 const tabItems = [
   { label: 'List View', value: 'list', icon: 'ebli:list' },
   { label: 'Grid View', value: 'grid', icon: 'ebli:grid' },
 ]
-// 상태 필터 탭
+
+// B/L 상태 옵션
+const blStatusOptions = [
+  { label: 'All', value: '_all' },
+  { label: 'ISSUED', value: 'ISSUED' },
+  { label: 'AMENDING', value: 'AMENDING' },
+  { label: 'SWITCHING', value: 'SWITCHING' },
+  { label: 'DELIVERY', value: 'DELIVERY' },
+  { label: 'VOIDED', value: 'VOIDED' },
+]
+
 const statusTabItems = computed(() =>
   blStatusOptions.map((opt) => ({ label: opt.label, value: opt.value })),
 )
 
-// 페이지네이션 (List/Grid 뷰별)
+// 페이지네이션 상태 - List/Grid 탭별
 const listPage = ref(1)
 const listItemsPerPage = ref(10)
 const gridPage = ref(1)
 const gridItemsPerPage = ref(12)
 
-// 현재 탭에 따른 페이지 번호
+// 폼 데이터 - B/L 상세 정보
+const formData = reactive({
+  blNo: '',
+  companyName: '',
+  blStatus: '',
+  transactionStatus: '',
+  routing: '',
+  originPort: '',
+  destinationPort: '',
+  sendDate: '',
+})
+
+// 계산형 속성 - 현재 탭의 페이지 번호
 const page = computed({
   get: () => (activeTab.value === 'list' ? listPage.value : gridPage.value),
   set: (val) => {
@@ -658,6 +883,7 @@ const page = computed({
   },
 })
 
+// 계산형 - 현재 탭의 페이지당 항목 수
 const itemsPerPage = computed({
   get: () => (activeTab.value === 'list' ? listItemsPerPage.value : gridItemsPerPage.value),
   set: (val) => {
@@ -671,7 +897,7 @@ const itemsPerPage = computed({
   },
 })
 
-// 탭별 항목 수 옵션
+// 계산형 - 탭별 페이지당 항목 수 옵션
 const itemsPerPageOptions = computed(() => {
   if (activeTab.value === 'list') {
     return [
@@ -690,40 +916,117 @@ const itemsPerPageOptions = computed(() => {
   }
 })
 
-// 상태 옵션
-const blStatusOptions = [
-  { label: 'All', value: '_all' },
-  { label: 'ISSUED', value: 'ISSUED' },
-  { label: 'AMENDING', value: 'AMENDING' },
-  { label: 'SWITCHING', value: 'SWITCHING' },
-  { label: 'DELIVERY', value: 'DELIVERY' },
-  { label: 'PENDING', value: 'PENDING' },
-]
+// 데이터 생성 - 9280개의 B/L 레코드 생성
+const generateDummyData = () => {
+  const data = []
+  const companies = [
+    'KTNETEBL1',
+    'KTNETEBL2',
+    'KTNETEBL3',
+    'VERY LONG COMPANY NAME FOR TESTING TRUNCATION AND ELLIPSIS BEHAVIOR IN THE GRID CELL RENDERER',
+  ]
+  const blStatus = ['ISSUED', 'AMENDING', 'SWITCHING', 'DELIVERY', 'VOIDED']
+  const blStatusBadgeColorMap = {
+    ISSUED: 'mint',
+    AMENDING: 'violet',
+    SWITCHING: 'violet',
+    DELIVERY: 'violet',
+    VOIDED: 'red',
+  }
+  const blStatusTooltipMap = {
+    ISSUED: '발행 완료',
+    AMENDING: '수정 요청 수락',
+    SWITCHING: '전환 요청 수락',
+    DELIVERY: '반환 요청 수락',
+    VOIDED: '취소 완료',
+  }
+  const transactionStatus = ['ISSUE', 'SACC', 'TRANSFER', 'AMENDMENT', 'SWITCH', 'ENDORSEMENT']
+  const routingData = [
+    {
+      origin: { code: 'KRPUS', name: 'BUSAN, KOREA' },
+      destination: { code: 'USBOS', name: 'BOSTON, USA' },
+    },
+    {
+      origin: { code: 'KRINC', name: 'INCHEON, KOREA' },
+      destination: { code: 'DEHAM', name: 'HAMBURG, GERMANY' },
+    },
+    {
+      origin: { code: 'KRKAN', name: 'GWANGYANG, KOREA' },
+      destination: { code: 'USNYC', name: 'NEW YORK, USA' },
+    },
+  ]
+  const attachmentButtonVariants = [
+    {
+      label: '',
+      icon: 'mdi-paperclip',
+      color: 'ghost',
+      small: true,
+      outlined: false,
+      iconOnly: true,
+    },
+    {
+      label: 'Files',
+      icon: 'mdi-paperclip',
+      color: 'ghost',
+      small: true,
+      outlined: false,
+    },
+    {
+      label: 'Open',
+      icon: 'mdi-paperclip',
+      color: 'subtle',
+      small: true,
+      outlined: true,
+    },
+    {
+      label: 'View',
+      icon: 'mdi-paperclip',
+      color: 'primary',
+      small: true,
+      outlined: false,
+      pill: true,
+    },
+  ]
 
-// 폼 데이터
-const formData = reactive({
-  blNo: '',
-  companyName: '',
-  blStatus: '',
-  transactionStatus: '',
-  routing: '',
-  originPort: '',
-  destinationPort: '',
-  receivedDate: '',
-})
+  for (let i = 1; i <= 9280; i++) {
+    const randomDays = Math.floor(Math.random() * 365)
+    const date = new Date()
+    date.setDate(date.getDate() - randomDays)
+    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:00`
 
-const dummyText = `"SHIPPER'S LOAD, COUNT, SEALED & WEIGHT S.T.C"
-1 X 40'H DV CONTAINER
-303 PACKAGES
-HMMU6431138 / 24H0354452 / 40HC / 30 3PKG / 21183.47 KGS / 60.548 CBM
-BLUE BACKPACK LB MOCHILA DAV
-PO.102286561-10 SAP 210106103 590 PCS
-MARCA : LABEL
-Total Number of Container or Packages(in words) : ONE(1) CONTAINER ONLY`
+    const routingInfo = routingData[i % routingData.length]
+    const statusValue = blStatus[i % blStatus.length]
+    const companyIndex = i % companies.length
+    const attachmentCount = i % 5 === 0 ? 0 : (i % 3) + 1
+    const attachmentButton = attachmentButtonVariants[i % attachmentButtonVariants.length]
+    data.push({
+      blNo: `HDMUSEL${String(i).padStart(10, '0')}`,
+      companyName: {
+        name: companies[companyIndex],
+        logo: `https://i.pravatar.cc/150?img=${(i % 20) + 1}`,
+        prefix: 'To',
+      },
+      blStatus: {
+        value: statusValue,
+        color: blStatusBadgeColorMap[statusValue],
+        tooltip: blStatusTooltipMap[statusValue],
+      },
+      transactionStatus: transactionStatus[i % transactionStatus.length],
+      attachmentCount,
+      attachmentButton,
+      routing: routingInfo,
+      sendDate: formattedDate,
+      /*2026.06.24 추가*/
+      dg: i % 2 === 1 ? 'Y' : 'N',
+    })
+  }
 
-const additionalTC = ref(dummyText)
-const additionalComment = ref(dummyText)
+  return data
+}
 
+const rowData = ref(generateDummyData())
+
+// 데이터 생성 - 100개의 컨테이너 레코드 생성
 const generateContainerData = () => {
   const data = []
   const sizeTypes = ['40HC', '20DC', '40GP', '20GP', '40OT', '20OT']
@@ -731,7 +1034,7 @@ const generateContainerData = () => {
   const units = ['PKG', 'CASE', 'PALLET', 'BOX']
   const tempUnits = ['°C', '°F']
 
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 100; i++) {
     const prefix = containerPrefixes[Math.floor(Math.random() * containerPrefixes.length)]
     const sizeType = sizeTypes[Math.floor(Math.random() * sizeTypes.length)]
     const unit = units[Math.floor(Math.random() * units.length)]
@@ -753,13 +1056,22 @@ const generateContainerData = () => {
         : '-',
       dgName: Math.random() > 0.9 ? 'CHEMICAL PRODUCT' : '-',
       imdg: Math.random() > 0.9 ? '3082' : '-',
+      shippingMarks: `C042202 made
+in Korea case 2
+C042202 made
+in Korea case 2
+C042202 made
+in Korea case 2`,
     })
   }
 
   return data
 }
 
+// 컨테이너 데이터 참조
 const containerList = ref(generateContainerData())
+
+// 약관 데이터
 const termsData = ref([
   {
     title: 'DEFINITIONS',
@@ -780,118 +1092,37 @@ const termsData = ref([
     description:
       'Unless otherwise agreed in writing, all freight, charges and other monies due under this Bill of Lading...',
   },
+  {
+    title: 'LIEN',
+    description:
+      'The Carrier shall have a lien on the goods, on any documents relating to the goods and on...',
+  },
+  {
+    title: 'LIMITATION OF LIABILITY',
+    description:
+      'The total liability of the Carrier under this Bill of Lading shall be limited to the actual loss or damage...',
+  },
+  {
+    title: 'NOTICE OF LOSS OR DAMAGE',
+    description:
+      'Unless notice of loss or damage and the general nature of such loss or damage is given in writing...',
+  },
+  {
+    title: 'DECK CARGO',
+    description:
+      'Goods on deck shall be carried entirely at the risk of the Shipper. The Carrier shall not be liable...',
+  },
+  {
+    title: 'GOVERNING LAW AND JURISDICTION',
+    description:
+      '(A) Any claims arising from or in connection with or relating to this Bill of Lading shall...',
+  },
+  {
+    title: 'GENERAL AVERAGE',
+    description:
+      'General Average shall be adjusted according to the York-Antwerp Rules as applicable to the voyage...',
+  },
 ])
-
-const createTransactionRow = (id, overrides = {}) => ({
-  id,
-  status: 'ISSU',
-  lastUpdate: '2025-09-01 15:15:00',
-  actor: 'Hyundai Merchant Marine',
-  recipient: 'KTNETEBL1',
-  details: ['[발행 완료] Comment : 발행이 완료되었습니다.'],
-  ...overrides,
-})
-
-const transactionRows = createTransactionRow(1)
-const openTransactionRowId = ref(null)
-
-const isTransactionRowOpen = (id) => openTransactionRowId.value === id
-
-const toggleTransactionRow = (id) => {
-  openTransactionRowId.value = openTransactionRowId.value === id ? null : id
-}
-
-const computedTransactions = computed(() => [
-  { ...transactionRows, isOpen: isTransactionRowOpen(transactionRows.id) },
-])
-
-// 더미 데이터 생성
-const generateDummyData = () => {
-  const data = []
-  const companies = [
-    'KTNETEBL1',
-    'KTNETEBL2',
-    'KTNETEBL3',
-    'VERY LONG COMPANY NAME FOR TESTING TRUNCATION AND ELLIPSIS BEHAVIOR IN THE GRID CELL RENDERER',
-  ]
-  const blStatus = ['ISSUED', 'AMENDING', 'SWITCHING', 'DELIVERY', 'ENDORSE', 'PENDING', 'VOIDED']
-  const blStatusBadgeColorMap = {
-    ISSUED: 'mint',
-    AMENDING: 'violet',
-    SWITCHING: 'violet',
-    DELIVERY: 'violet',
-    ENDORSE: 'amber',
-    PENDING: 'amber',
-    VOIDED: 'red',
-  }
-  const blStatusTooltipMap = {
-    ISSUED: '발행 완료',
-    AMENDING: '수정 요청 수락',
-    SWITCHING: '전환 요청 수락',
-    DELIVERY: '반환 요청 수락',
-    ENDORSE: '양도 완료',
-    PENDING: '요청 진행중',
-    VOIDED: '취소 완료',
-  }
-  const transactionStatus = [
-    'ISSUE',
-    'SACC',
-    'TRANSFER',
-    'AMENDMENT',
-    'SWITCH',
-    'ENDORSE TO ORDER',
-    'BLANK ENDORSE',
-  ]
-  const routingData = [
-    {
-      origin: { code: 'KRPUS', name: 'BUSAN, KOREA' },
-      destination: { code: 'USBOS', name: 'BOSTON, USA' },
-    },
-    {
-      origin: { code: 'KRINC', name: 'INCHEON, KOREA' },
-      destination: { code: 'DEHAM', name: 'HAMBURG, GERMANY' },
-    },
-    {
-      origin: { code: 'KRKAN', name: 'GWANGYANG, KOREA' },
-      destination: { code: 'USNYC', name: 'NEW YORK, USA' },
-    },
-  ]
-
-  for (let i = 1; i <= 9280; i++) {
-    const randomDays = Math.floor(Math.random() * 365)
-    const date = new Date()
-    date.setDate(date.getDate() - randomDays)
-    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:00`
-
-    const routingInfo = routingData[i % routingData.length]
-    const statusValue = blStatus[i % blStatus.length]
-    const companyIndex = i % companies.length
-    data.push({
-      no: i,
-      blNo: `HDMUSEL${String(i).padStart(10, '0')}`,
-      companyName: {
-        name: companies[companyIndex],
-        logo: `https://i.pravatar.cc/150?img=${(i % 20) + 1}`,
-        prefix: 'From',
-      },
-      blStatus: {
-        value: statusValue,
-        color: blStatusBadgeColorMap[statusValue],
-        tooltip: blStatusTooltipMap[statusValue],
-      },
-      transactionStatus: transactionStatus[i % transactionStatus.length],
-      routing: routingInfo,
-      receivedDate: formattedDate,
-
-      /*2026.06.24 추가*/
-      dg: i % 2 === 1 ? 'Y' : 'N',
-    })
-  }
-
-  return data
-}
-
-const rowData = ref(generateDummyData())
 
 // ===== 필터 로직 =====
 // [추가] 셀렉트 박스에서 사용할 옵션 데이터 (화면설계서 기준)
@@ -900,7 +1131,7 @@ const dgOptions = ref([
   { label: 'DG Only', value: 'DG' }
 ])
 
-// 필터 상태 (입력용)
+// 필터 상태 - 회사명, B/L 번호, 날짜 범위 (입력용)
 const filters = reactive({
   companyName: '',
   blNo: '',
@@ -913,15 +1144,15 @@ const appliedFilters = reactive({
   companyName: '',
   blNo: '',
   dateRange: getDefaultDateRange(),
-  dgType: 'ALL', // [추가] DG 필터 입력 상태 초기값
+  dgType: 'ALL', // [추가] 실제 적용될 DG 필터 상태
 })
 
-// 기본 날짜 범위 반환
+// 기본 날짜 범위 반환 [12월 1일, 1월 1일]
 function getDefaultDateRange() {
   return [new Date('2025-12-01'), new Date('2026-01-01')]
 }
 
-// Search 버튼 클릭 시 필터 적용
+// 필터 - Search 버튼 클릭 시 필터 적용
 const applyFilters = () => {
   appliedFilters.companyName = filters.companyName
   appliedFilters.blNo = filters.blNo
@@ -935,7 +1166,27 @@ const applyFilters = () => {
   }
 }
 
-// 필터링된 데이터
+// 필터 - 모든 필터 조건 초기화
+const resetFilters = () => {
+  filters.companyName = ''
+  filters.blNo = ''
+  filters.dateRange = getDefaultDateRange()
+  filters.dgType = 'ALL' // [추가] DG 필터 입력값 초기화
+
+  appliedFilters.companyName = ''
+  appliedFilters.blNo = ''
+  appliedFilters.dateRange = getDefaultDateRange()
+  filters.dgType = 'ALL' // [추가] DG 필터 입력값 초기화
+
+  statusTab.value = '_all'
+  if (activeTab.value === 'list') {
+    listPage.value = 1
+  } else {
+    gridPage.value = 1
+  }
+}
+
+// 계산형 - 회사, B/L 번호, 상태, 날짜로 B/L 데이터 필터링
 const filteredRowData = computed(() => {
   return rowData.value.filter((row) => {
     const matchesCompanyName = (row.companyName?.name || '')
@@ -952,7 +1203,7 @@ const filteredRowData = computed(() => {
 
     let matchesDate = true
     if (appliedFilters.dateRange && appliedFilters.dateRange[0] && appliedFilters.dateRange[1]) {
-      const rowDate = new Date(row.receivedDate)
+      const rowDate = new Date(row.sendDate)
       const startDate = new Date(appliedFilters.dateRange[0])
       const endDate = new Date(appliedFilters.dateRange[1])
       startDate.setHours(0, 0, 0, 0)
@@ -965,19 +1216,19 @@ const filteredRowData = computed(() => {
   })
 })
 
-// 최대 페이지
+// 계산형 - 최대 페이지 수
 const maxPage = computed(() => {
   return Math.ceil(filteredRowData.value.length / itemsPerPage.value)
 })
 
-// 페이지네이션된 데이터
+// 계산형 - 현재 페이지 데이터 조회
 const paginatedRowData = computed(() => {
   const start = (page.value - 1) * itemsPerPage.value
   const end = start + itemsPerPage.value
   return filteredRowData.value.slice(start, end)
 })
 
-// 페이지네이션 수정 시 페이지 재조정
+// 감시 - 페이지당 항목 수 변경 시 페이지 재조정
 watch([listItemsPerPage, gridItemsPerPage, () => rowData.value.length], () => {
   const currentMaxPage = Math.ceil(filteredRowData.value.length / itemsPerPage.value)
 
@@ -989,23 +1240,25 @@ watch([listItemsPerPage, gridItemsPerPage, () => rowData.value.length], () => {
   }
 })
 
-// 컬럼 정의
+// 그리드 컬럼 정의
 const listColDefs = ref([
   {
-    field: 'no',
-    headerName: 'No',
-    width: 80,
+    colId: 'rowNo',
+    headerName: '',
+    width: 60,
     maxWidth: 100,
-    sort: 'desc',
-    headerStyle: { justifyContent: 'flex-start' },
-    //2026.05.18 hide 추가
-    hide: true,
+    sortable: false,
+    valueGetter: (params) =>
+      filteredRowData.value.length - ((page.value - 1) * itemsPerPage.value + params.node.rowIndex),
+    cellStyle: { textAlign: 'right' },
+    headerStyle: { justifyContent: 'flex-end' },
   },
   {
     field: 'companyName',
     headerName: 'Company Name',
     flex: 1,
     minWidth: 180,
+    cellDataType: false,
     cellRenderer: CompanyNameCellRenderer,
     cellRendererParams: (params) => ({
       name: params.data?.companyName?.name || '',
@@ -1023,16 +1276,35 @@ const listColDefs = ref([
     headerStyle: { justifyContent: 'flex-start' },
   },
   {
+    field: 'attachmentButton',
+    headerName: 'Attachment',
+    width: 120,
+    minWidth: 120,
+    //2026.05.18 hide 추가
+    hide: true,
+    sortable: false,
+    filter: false,
+    cellDataType: false,
+    cellRenderer: EblBtnCellRenderer,
+    cellRendererParams: (params) => ({
+      ...params.data?.attachmentButton,
+      onClick: (row) => onAttachmentClick(row),
+      disabled: (row) => !row?.attachmentCount,
+    }),
+    headerStyle: { justifyContent: 'center' },
+    cellStyle: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  },
+  {
     field: 'blStatus',
     headerName: 'B/L Status',
     width: 110,
     minWidth: 110,
+    cellDataType: false,
     cellRenderer: BadgeCellRenderer,
     cellRendererParams: (params) => ({
       color: params.data?.blStatus?.color,
-      tooltip: params.data?.blStatus?.tooltip,
+      tooltip: '샘플 툴팁 문구입니다.',
     }),
-    //cellStyle: { textAlign: 'center' },  2026.05.18 textalign 제거
     headerStyle: { justifyContent: 'flex-start' },
   },
   {
@@ -1066,29 +1338,31 @@ const listColDefs = ref([
     headerName: 'Routing',
     flex: 1,
     minWidth: 200,
+    cellDataType: false,
     cellRenderer: RoutingCodeCellRenderer,
     cellStyle: { display: 'flex', alignItems: 'center' },
     cellRendererParams: (params) => ({
       origin: params.data?.routing?.origin || { code: '', name: '' },
       destination: params.data?.routing?.destination || { code: '', name: '' },
     }),
+    cellStyle: { display: 'flex', alignItems: 'center' },
     headerStyle: { justifyContent: 'flex-start' },
   },
   {
-    field: 'receivedDate',
-    headerName: 'Received Date',
+    field: 'sendDate',
+    headerName: 'Send Date',
     width: 180,
     minWidth: 150,
     headerStyle: { justifyContent: 'flex-start' },
   },
 ])
 
-// 그리드 이벤트 핸들러
+// 이벤트 핸들러 - 그리드 준비 완료 초기화
 const onGridReady = (params) => {
   gridApi.value = params.api
 }
 
-// 셀 클릭
+// 이벤트 핸들러 - 그리드 셀 클릭
 const onCellClicked = (params) => {
   if (params.colDef.field === 'blNo' || params.colDef.field === 'companyName') {
     detailRow.value = params.data
@@ -1096,29 +1370,63 @@ const onCellClicked = (params) => {
   }
 }
 
-// 그리드 아이템 클릭
+// 첨부파일 버튼 클릭 시 현재 행 데이터를 기준으로 후속 동작을 연결한다.
+const onAttachmentClick = (row) => {
+  console.log('Attachment button clicked:', row)
+}
+
+// 이벤트 핸들러 - 그리드 뷰 항목 클릭
 const onGridItemClick = (item) => {
   detailRow.value = item
   openDetailDialog(item)
 }
 
-// 상세 정보 다이얼로그 열기
+// 다이얼로그 - 상세 정보 다이얼로그 열기
 const openDetailDialog = (row) => {
   formData.blNo = row.blNo
-  formData.companyName = row.companyName?.name || row.companyName
+  formData.companyName = row.companyName
   formData.blStatus = row.blStatus?.value || ''
   formData.transactionStatus = row.transactionStatus
   formData.routing = row.routing
   formData.originPort = row.originPort
   formData.destinationPort = row.destinationPort
-  formData.receivedDate = row.receivedDate
+  formData.sendDate = row.sendDate
   dialogOpen.value = true
+
+  let actualData = null;
+  
+  if (row) {
+    if (row.data) {
+      actualData = row.data;
+    } else {
+      actualData = row;
+    }
+  }
+
+  console.log('==== [Detail Panel Open Data] ====', actualData);
+
+  if (actualData && (actualData.dg === 'Y' || actualData.dg === true)) {
+    currentDgStatus.value = 'Y';
+  } else {
+    currentDgStatus.value = 'N';
+  }
 }
 
-// 다이얼로그 닫기
+// 다이얼로그 - 상세 정보 다이얼로그 닫기
 const closeDialog = () => {
   dialogOpen.value = false
   detailRow.value = null
+}
+
+// 토글 - Preview 팝업 표시 여부
+const toggleBlData = () => {
+  if (bldataOpen.value) {
+    bldataOpen.value = false
+  } else {
+    transactionStatusOpen.value = false
+    previewOpen.value = false
+    bldataOpen.value = true
+  }
 }
 
 // 토글 - Preview 팝업 표시 여부
@@ -1127,6 +1435,7 @@ const togglePreview = () => {
     previewOpen.value = false
   } else {
     transactionStatusOpen.value = false
+    bldataOpen.value = false
     previewOpen.value = true
   }
 }
@@ -1137,27 +1446,96 @@ const toggleTransactionStatus = () => {
     transactionStatusOpen.value = false
   } else {
     previewOpen.value = false
+    bldataOpen.value = false
     transactionStatusOpen.value = true
   }
 }
 
-// 모든 필터 조건 초기화
-const resetFilters = () => {
-  filters.companyName = ''
-  filters.blNo = ''
-  filters.dateRange = getDefaultDateRange()
-  appliedFilters.companyName = ''
-  appliedFilters.blNo = ''
-  appliedFilters.dateRange = getDefaultDateRange()
-  statusTab.value = '_all'
-  if (activeTab.value === 'list') {
-    listPage.value = 1
-  } else {
-    gridPage.value = 1
-  }
-}
-</script>
+//패널 탭 추가
+/* START: 운영 유지보수 - DG 값에 따른 상세 패널 탭 목록 동적 제어 */
+// 1. 현재 열린 다이얼로그의 DG 여부를 독립적으로 저장할 반응형 변수 생성
+const currentDgStatus = ref('N')
 
+// 2. computed 영역은 외부 변수 에러 없이 오직 currentDgStatus만 바라봅니다.
+const detailTabItems = computed(() => {
+  const baseTabs = [
+    { value: 'blInfo', label: 'B/L' },
+    { value: 'containerInfo', label: 'Container' },
+    { value: 'tAndCInfo', label: 'T&C' },
+  ]
+
+  // 상태값이 'Y'일 때만 안전하게 탭 주입
+  if (currentDgStatus.value === 'Y') {
+    baseTabs.splice(2, 0, { value: 'dgInfo', label: 'DG' })
+  }
+
+  return baseTabs
+})
+
+
+// 1. DG 서브 패널 제어 변수 선언
+const dgSubPanelOpen = ref(false)
+
+// 2. [안전장치] 메인 패널이 통째로 닫힐 때 서브 패널 상태도 무조건 클린 정리
+// 기존 closeDialog 함수 내부를 찾아서 닫힘 처리를 연동하거나 watch를 사용합니다.
+watch(() => dialogOpen.value, (newVal) => {
+  if (!newVal) {
+    dgSubPanelOpen.value = false
+  }
+})
+
+
+// 글로벌 eBL 표준 규격을 모사한 고품질 데이터셋 정의
+const blEdiRawData = ref({
+  documentHeader: {
+    documentIdentifier: "EBL-2026-HDMU70328427",
+    documentType: "ELECTRONIC_BILL_OF_LADING",
+    creationDateTime: "2026-06-24T04:30:15Z",
+    blockchainTxHash: "0x4f8e9a2b7c3d5e1f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z"
+  },
+  parties: {
+    shipper: {
+      companyName: "GLOBAL TRADING CO., LTD",
+      address: "122, Teheran-ro, Gangnam-gu, Seoul, Republic of Korea",
+      registrationNo: "120-81-12345"
+    },
+    consignee: {
+      companyName: "TO ORDER OF KTNET BANKING CORP",
+      address: "338, Pangyo-ro, Bundang-gu, Seongnam-si, Gyeonggi-do, Republic of Korea"
+    },
+    notifyParty: {
+      companyName: "PACIFIC LOGISTICS INC",
+      address: "Port of Long Beach, Pier G, CA, USA"
+    },
+    carrier: {
+      scacCode: "HDMU",
+      carrierName: "HMM CO., LTD."
+    }
+  },
+  transportDetails: {
+    vesselName: "HMM ROTTERDAM",
+    voyageNumber: "005E",
+    portOfLoading: "KRINC - INCHEON, KOREA",
+    portOfDischarge: "USLGB - LONG BEACH, USA",
+    placeOfDelivery: "USLGB - LONG BEACH, USA"
+  },
+  cargoSummary: {
+    totalGrossWeight: {
+      value: 24500.50,
+      unit: "KGM"
+    },
+    totalVolume: {
+      value: 65.40,
+      unit: "MTQ"
+    },
+    totalPackageCount: {
+      value: 450,
+      type: "BOXES"
+    },
+    cargoDescription: "CHEMICAL RAW MATERIALS AND INDUSTRIAL PROTECTIVE EQUIPMENTS (NON-HAZARDOUS & DANGEROUS GOODS APPLIED)"
+  }
+})
+</script>
 
 <!--2026.06.24 no data 강제처리-->
 <style scoped>
@@ -1250,4 +1628,119 @@ const resetFilters = () => {
   text-align: center;
   font-family: inherit;
 }
+
+
+/* 1. 전체 코드 폰트 및 자간 구성 정돈 */
+.ebl-json-viewer-container {
+  font-family: inherit;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  letter-spacing: -0.2px !important;
+  padding:24px !important;
+  border-radius:16px;
+  background:#EBF0F5;
+}
+
+/* 2. 에디터 감성의 확실한 데이터 타입별 색상 매핑 (Syntax Highlighting) */
+
+/* Key (속성명): 시안 및 에디터 특유의 자주/붉은 계열 색상 */
+:deep(.jv-key) {
+  color: #D85491 !important; /* 선명한 Crimson / Rose 계열 */
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+/* String (문자열 값): 에디터 표준 브라우저 블루 계열 */
+:deep(.jv-string) {
+  color: #295BFF !important; /* 깊고 선명한 Royal Blue */
+  font-weight: 400;
+}
+
+/* Number (숫자 값): 녹색 혹은 오렌지 계열 */
+:deep(.jv-number) {
+  color: #295BFF !important; /* Amber / Orange 계열 */
+  font-weight: 500;
+}
+
+/* Boolean (논리값) & Null */
+:deep(.jv-boolean), :deep(.jv-null) {
+  color: #295BFF !important; /* Violet 계열 */
+  font-weight: bold;
+}
+
+/* 괄호 및 기호 (중괄호, 대괄호, 콤마, 콜론) */
+:deep(.jv-code) {
+  color: #6B7C93 !important; /* 기본 기호는 Slate Grey */
+  padding-left:16px !important;
+  margin-top:2px !important;
+  margin-bottom:2px !important;
+}
+
+:deep(.jv-node) {
+  color: #6B7C93 !important; /* 기본 기호는 Slate Grey */
+  padding-left:16px !important;
+  margin-top:2px !important;
+  margin-bottom:2px !important;
+}
+
+/* 3. 에디터 특유의 들여쓰기 공간감 및 가이드 라인(인덴트 세로선) 구현 */
+:deep(.jv-item) {
+  transition: border-color 0.2s ease;
+}
+
+/* 루트 깊이의 가장 바깥 테두리 선은 제외 처리 */
+:deep(.jv-container > .jv-code > .jv-item) {
+  border-left: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* 1. 기본 스타일 (가장 밑바탕이 되는 디폴트 기호 정의) */
+/* 처음 화면이 열릴 때나 기본적으로 무조건 플러스(+)가 나오도록 베이스를 깔아둡니다. */
+:deep(.jv-toggle::before) {
+  content: "+" !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #0284C7 !important; /* 플러스일 때 블루 톤 */
+  font-family: monospace !important;
+}
+
+/* 2. 클래스 저격 스타일 (우선순위가 더 높음) */
+/* 개발자 도구에서 확인하신 'open' 클래스가 부모 노드에 붙는 순간, 
+   CSS 우선순위 규칙에 의해 위의 플러스(+)를 밀어내고 마이너스(-)로 강제 덮어씁니다. */
+:deep(.jv-toggle.open::before){
+  content: "-" !important;
+  color: #475569 !important; /* 마이너스일 때 차분한 슬레이트 그레이 톤 */
+}
+
+/* 3. 기본 사각형 토글 박스 레이아웃 (유지) */
+:deep(.jv-code .jv-toggle) {
+  background: #FFFFFF !important;
+  border: 1px solid #94A3B8 !important;
+  border-radius: 4px !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-right: 8px !important;
+  vertical-align: middle !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-size: 0 !important;
+}
+
+:deep(.jv-toggle:hover) {
+  background-color: #F1F5F9 !important;
+  border-color: #64748B !important;
+}
+
+:deep(.jv-container > .jv-code) {
+  padding-left:0 !important;
+  margin:0 !important;
+}
+
+/* ==========================================================================
+   END: B/L Data Details - 진짜 VS Code 에디터 풍 스타일 오버라이딩
+   ========================================================================== */
 </style>

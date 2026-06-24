@@ -589,6 +589,22 @@ export const PUB_MENUS = [
     nature: '공통',
   },
 
+  // ========== eBL서비스 (선사) Documents - Dangerous Cargo ==========
+  {
+    service: 'ebl',
+    userType: ['선사'],
+    levels: ['Documents', 'Archive'],
+    screenId: 'EBLCDC120T',
+    name: 'DG 상세페이지',
+    type: '화면',
+    desc: 'DG화물에 대한 상세 페이지 구성',
+    completedAt: '2026-06-24',
+    mobileApply: '필수 적용',
+    mobileAttr: 'Body',
+    mobileCompletedAt: '2026-06-24',
+    nature: '공통',
+  },
+
   // ========== eBL서비스 (화주/은행) Documents - Compose Envelope ==========
   {
     service: 'ebl',

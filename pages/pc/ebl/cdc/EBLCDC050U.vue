@@ -29,6 +29,16 @@
           :style="{ width: '180px' }"
           @keydown.enter="applyFilters"
         />
+
+        <!--2026.06.24 추가-->
+        <EblSelect
+          v-model="filters.dgType"
+          :options="dgOptions"
+          placeholder="Cargo Type"
+          :style="{ width: '140px' }"
+          @change="applyFilters"
+        />
+
         <EblDatePicker
           v-model="filters.dateRange"
           range
@@ -59,7 +69,7 @@
       <!-- Tab Content: Grid View -->
       <template v-else-if="activeTab === 'grid'">
         <!-- Grid View Container -->
-        <div class="ebl-grid-view ebl-grid-view--wrap">
+        <div v-if="paginatedRowData && paginatedRowData.length > 0" class="ebl-grid-view ebl-grid-view--wrap">
           <EblGridViewItem
             v-for="(item, index) in paginatedRowData"
             :key="index"
@@ -69,8 +79,16 @@
             :transaction-status="item.transactionStatus"
             :routing="item.routing"
             :received-date="item.sendDate"
+            :dg="item.dg"
             @click="onGridItemClick(item)"
           />
+        </div>
+
+        <div v-else class="ebl-grid-nodata-container">
+          <div class="nodata-illustration"></div>
+          <h3 class="nodata-title">No results found</h3>
+          <p class="nodata-desc">No data matches your current filter settings.</p>
+          <p class="nodata-desc">Please try adjusting your filters or date range.</p>
         </div>
       </template>
 
@@ -889,6 +907,8 @@ const generateDummyData = () => {
       attachmentButton,
       routing: routingInfo,
       sendDate: formattedDate,
+      /*2026.06.24 추가*/
+      dg: i % 2 === 1 ? 'Y' : 'N',
     })
   }
 
@@ -996,11 +1016,18 @@ const termsData = ref([
 ])
 
 // ===== 필터 로직 =====
+// [추가] 셀렉트 박스에서 사용할 옵션 데이터 (화면설계서 기준)
+const dgOptions = ref([
+  { label: 'All Cargo', value: 'ALL' },
+  { label: 'DG Only', value: 'DG' }
+])
+
 // 필터 상태 - 회사명, B/L 번호, 날짜 범위 (입력용)
 const filters = reactive({
   companyName: '',
   blNo: '',
   dateRange: getDefaultDateRange(),
+  dgType: 'ALL', // [추가] DG 필터 입력 상태 초기값
 })
 
 // 적용된 필터 (실제 필터링에 사용)
@@ -1008,6 +1035,7 @@ const appliedFilters = reactive({
   companyName: '',
   blNo: '',
   dateRange: getDefaultDateRange(),
+  dgType: 'ALL', // [추가] 실제 적용될 DG 필터 상태
 })
 
 // 기본 날짜 범위 반환 [12월 1일, 1월 1일]
@@ -1020,6 +1048,8 @@ const applyFilters = () => {
   appliedFilters.companyName = filters.companyName
   appliedFilters.blNo = filters.blNo
   appliedFilters.dateRange = filters.dateRange ? [...filters.dateRange] : getDefaultDateRange()
+  appliedFilters.dgType = filters.dgType // [추가] DG 필터 값 적용
+
   if (activeTab.value === 'list') {
     listPage.value = 1
   } else {
@@ -1032,9 +1062,13 @@ const resetFilters = () => {
   filters.companyName = ''
   filters.blNo = ''
   filters.dateRange = getDefaultDateRange()
+  filters.dgType = 'ALL' // [추가] DG 필터 입력값 초기화
+
   appliedFilters.companyName = ''
   appliedFilters.blNo = ''
   appliedFilters.dateRange = getDefaultDateRange()
+  filters.dgType = 'ALL' // [추가] DG 필터 입력값 초기화
+
   statusTab.value = '_all'
   if (activeTab.value === 'list') {
     listPage.value = 1
@@ -1054,6 +1088,10 @@ const filteredRowData = computed(() => {
     // 상태 탭 필터 적용
     const matchesBlStatus = statusTab.value === '_all' || row.blStatus?.value === statusTab.value
 
+    // [추가] DG(위험물) 필터 적용 로직
+    // 설계서 기준: 'DG Only' 선택 시 데이터의 row.dg(또는 설계서 상의 구분값)가 'Y'인 것만 추출
+    const matchesDg = appliedFilters.dgType === 'ALL' || row.dg === 'Y'
+
     let matchesDate = true
     if (appliedFilters.dateRange && appliedFilters.dateRange[0] && appliedFilters.dateRange[1]) {
       const rowDate = new Date(row.sendDate)
@@ -1064,7 +1102,8 @@ const filteredRowData = computed(() => {
       matchesDate = rowDate >= startDate && rowDate <= endDate
     }
 
-    return matchesCompanyName && matchesBlNo && matchesBlStatus && matchesDate
+    // [수정] matchesDg 조건을 반환값에 추가
+    return matchesCompanyName && matchesBlNo && matchesBlStatus && matchesDate && matchesDg
   })
 })
 
@@ -1170,6 +1209,21 @@ const listColDefs = ref([
     },
     headerStyle: { justifyContent: 'flex-start' },
   },
+  //2026.06.24 추가
+  {
+    field: 'dg',
+    headerName: 'DG',
+    width: 60,
+    minWidth: 80,
+    valueFormatter: (params) => (params.value === 'Y' ? 'Y' : 'N'),
+    cellStyle: (params) => {
+      if (params.value === 'Y') {
+        return { color: '#FF1C1C'}
+      }
+      return { color: '#121A26' }
+    },
+    headerStyle: { justifyContent: 'flex-start' },
+  },
   {
     field: 'routing',
     headerName: 'Routing',
@@ -1257,3 +1311,96 @@ const toggleTransactionStatus = () => {
   }
 }
 </script>
+
+<!--2026.06.24 no data 강제처리-->
+<style scoped>
+:deep(.ag-body-viewport) {
+  height:420px;
+}
+:deep(.ag-overlay-no-rows-center) {
+  font-size: 0 !important;
+  color: transparent !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  
+  /* [수정 규칙] 중앙 정렬 축을 해제하고, 상단부터 정렬되도록 구조 변경 */
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important; /* 정중앙이 아닌 상단 기준 배치 */
+  
+  /* [피그마 여백 반영] 설계서 가이드라인 치수를 패딩값으로 그대로 강제 이식 */
+  padding-top: 150px !important;    /* 돋보기 일러스트 상단 여백 규격 */
+  padding-bottom: 150px !important; /* 서브 설명문 하단 여백 규격 */
+  box-sizing: border-box !important;
+}
+:deep(.ag-overlay-no-rows-center::before) {
+  content: "No results found" !important;
+  display: block !important;
+  text-align: center !important;
+  font-family: inherit !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #121A26 !important;
+  margin-bottom: 4px !important; 
+  
+  padding-top: 74px !important;
+  background: url("/assets/images/common/nodata.png") no-repeat center top !important;
+  background-size: 150px 74px !important;
+}
+:deep(.ag-overlay-no-rows-center::after) {
+  /* \A와 white-space 속성으로 설명문 내부에서만 깔끔하게 줄바꿈 처리 */
+  content: "No data matches your current filter settings.\A Please try adjusting your filters or date range." !important;
+  white-space: pre-line !important;
+  display: block !important;
+  text-align: center !important;
+  font-family: inherit !important;
+  
+  /* 피그마 시안 기준: 서브 설명문 스타일 (13px, Regular, 연한 회색) */
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #6B7C93 !important;
+  line-height: 1.5 !important;
+}
+/* 4. 오버레이 컨테이너 외부 프레임 투명화 */
+:deep(.ag-overlay-wrapper) {
+  background-color: transparent !important;
+}
+
+/*grid view nodata case*/
+.ebl-grid-nodata-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+.ebl-grid-nodata-container .nodata-illustration {
+  width: 150px;
+  height: 74px;
+  background: url("/assets/images/common/nodata.png") no-repeat center top;
+  background-size: 150px 74px;
+}
+.ebl-grid-nodata-container .nodata-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #121A26;
+  margin: 0 0 4px 0;
+  font-family: inherit;
+  text-align: center;
+}
+.ebl-grid-nodata-container .nodata-desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6B7C93;
+  margin: 0;
+  line-height: 1.5;
+  text-align: center;
+  font-family: inherit;
+}
+</style>
