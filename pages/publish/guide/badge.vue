@@ -130,6 +130,10 @@
               <span>Share</span>
               <VIcon size="14">mdi-share-variant</VIcon>
             </EblBadge>
+            <EblBadge color="red" variant="outlined">
+              <span>exclamation</span>
+              <img src="/images/badgeExclamation.svg" width="16" height="16" />
+            </EblBadge>
           </div>
           <div class="component-row">
             <EblBadge color="blue" variant="tonal" size="lg">

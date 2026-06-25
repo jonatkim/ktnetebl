@@ -466,11 +466,55 @@
               </div>
             </template>
             <template v-else-if="detailTab === 'dgInfo'">
-              <!--2026.06.24 테스트-->
-              <div class="pa-4 text-center">
-                <EblBtn color="primary" large @click="dgSubPanelOpen = true">
-                  DG Verification Guide Open
-                </EblBtn>
+              <div class="ebl-dg-tab-content" style="height: 700px;">
+
+                <div class="ebl-dg-total-header mb-4">
+                  Total <span class="count ml-1">10</span>
+                </div>
+
+                <div class="ebl-dg-box-container d-flex flex-column ga-4">
+                  <div
+                    v-for="(item, index) in dangerousCargoList.slice(0, 10)"
+                    :key="index"
+                    class="ebl-dg-spec-box"
+                    :class="{ 'is-active': selectedContainer?.containerNo === item.containerNo }"
+                    @click="selectedContainer = item"
+                  >
+                    <div class="box-header d-flex align-center justify-space-between mb-6">
+                      <div class="hs-code-title">
+                        <span class="label mr-2">HS Code</span>
+                        <span class="code font-weight-bold">840900</span>
+                      </div>
+                      <button class="eq-ref-badge-btn" @click.stop="selectedContainer = item; dgSubPanelOpen = true">
+                        Eq Ref: GAOU2139104
+                      </button>
+                    </div>
+
+                    <div class="box-body-sheet">
+                      <div class="data-row d-flex mb-4">
+                        <div class="data-col flex-1">
+                          <div class="data-label">Cargo Gross Weight</div>
+                          <div class="data-value">1,250,450.55 <span class="unit">KGM</span></div>
+                        </div>
+                        <div class="data-col flex-1">
+                          <div class="data-label">Cargo Gross Volume</div>
+                          <div class="data-value">12,400.75 <span class="unit">MTQ</span></div>
+                        </div>
+                      </div>
+                      <div class="data-row d-flex">
+                        <div class="data-col flex-1">
+                          <div class="data-label">IMO Package Code</div>
+                          <div class="data-value">1A1</div>
+                        </div>
+                        <div class="data-col flex-1">
+                          <div class="data-label">Number of Package</div>
+                          <div class="data-value">999,999</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </template>
             <template v-else-if="detailTab === 'tAndCInfo'">
@@ -507,7 +551,7 @@
             </template>
           </VCardText>
 
-          <VCardActions class="ebl-dialog__actions">
+          <VCardActions class="ebl-dialog__actions ty02">
             <EblBtn outlined large @click="toggleBlData">B/L Data</EblBtn>
             
             <EblBtn outlined large @click="togglePreview">Preview</EblBtn>
@@ -643,11 +687,10 @@
                 </template>
               </ClientOnly>
             </VCardText>
-              <VCardActions class="px-6 pb-6 pt-2 d-flex justify-end">
+              <VCardActions class="px-6 pb-6 d-flex justify-end">
                 <EblBtn 
-                  color="success" 
+                  color="cta" 
                   large 
-                  class="px-8 text-weight-bold ebl-pub-copy-btn"
                   @click="handleJsonCopy"
                 >
                   Copy
@@ -668,38 +711,26 @@
               <div class="ebl-card-linear d-flex" style="height: 700px">
                 <EblContainerList
                   v-model="selectedContainer"
-                  :list="containerList"
+                  :list="dangerousCargoList"
                   class="border-right"
                 />
                 <div class="flex-1 pa-5 ebl-scrollbar" style="overflow-y: auto">
                   <template v-if="selectedContainer">
                     <EblInfo>
-                      <EblInfoItem label="Container No">{{
-                        selectedContainer.containerNo
-                      }}</EblInfoItem>
-                      <EblInfoItem label="Seal No">{{ selectedContainer.sealNo }}</EblInfoItem>
-                      <EblInfoItem label="Size / Type">{{
-                        selectedContainer.sizeType
-                      }}</EblInfoItem>
-                      <EblInfoItem label="PKG / Unit">{{ selectedContainer.pkgUnit }}</EblInfoItem>
-                      <EblInfoItem label="Gross Weight"
-                        >{{ selectedContainer.grossWeight }} / MTQ</EblInfoItem
-                      >
-                      <EblInfoItem label="Tare">{{ selectedContainer.tare }}</EblInfoItem>
-                      <EblInfoItem label="VGM">{{ selectedContainer.netWeight }}</EblInfoItem>
-                      <EblInfoItem label="Volume / Unit">{{
-                        selectedContainer.volumeUnit
-                      }}</EblInfoItem>
-                      <EblInfoItem label="S/C">{{ selectedContainer.sc }}</EblInfoItem>
-                      <EblInfoItem label="RF">{{ selectedContainer.rf }}</EblInfoItem>
-                      <EblInfoItem label="Temp / Unit">{{
-                        selectedContainer.tempUnit
-                      }}</EblInfoItem>
-                      <EblInfoItem label="DG Name">{{ selectedContainer.dgName }}</EblInfoItem>
-                      <EblInfoItem label="IMDG">{{ selectedContainer.imdg }}</EblInfoItem>
-                      <EblInfoItem label="Shipping Marks">{{
-                        selectedContainer.shippingMarks
-                      }}</EblInfoItem>
+                      <EblInfoItem label="UN Number">{{ selectedContainer.unNumber }}</EblInfoItem>
+                      <EblInfoItem label="IMO Class">{{ selectedContainer.imoClass }}</EblInfoItem>
+                      <EblInfoItem label="Technical Name">{{ selectedContainer.technicalName }}</EblInfoItem>
+                      <EblInfoItem label="Gross Weight">{{ selectedContainer.dgGrossWeight }}</EblInfoItem>
+                      <EblInfoItem label="Net Weight">{{ selectedContainer.dgNetWeight }}</EblInfoItem>
+                      <EblInfoItem label="Net Volume">{{ selectedContainer.netVolume }}</EblInfoItem>
+                      <EblInfoItem label="Reportable Quantity">{{ selectedContainer.reportableQuantity }}</EblInfoItem>
+                      <EblInfoItem label="Marine Pollutant">{{ selectedContainer.marinePollutant }}</EblInfoItem>
+                      <EblInfoItem label="Excepted Quantity">{{ selectedContainer.exceptedQuantity }}</EblInfoItem>
+                      <EblInfoItem label="EMS Number">{{ selectedContainer.emsNumber }}</EblInfoItem>
+                      <EblInfoItem label="Packaging Group">{{ selectedContainer.packagingGroup }}</EblInfoItem>
+                      <EblInfoItem label="Proper Shipping Name">{{ selectedContainer.properShippingName }}</EblInfoItem>
+                      <EblInfoItem label="Flash Point">{{ selectedContainer.flashPoint }}</EblInfoItem>
+                      <EblInfoItem label="Temp Unit">{{ selectedContainer.dgTempUnit }}</EblInfoItem>
                     </EblInfo>
                   </template>
                   <template v-else>
@@ -1068,8 +1099,78 @@ in Korea case 2`,
   return data
 }
 
+//위험물 관련 데이터 생성 2026.06.25
+const generateDangerousCargoData = () => {
+  const data = []
+  const sizeTypes = ['40HC', '20DC', '40GP', '20GP']
+  const containerPrefixes = ['HMMU', 'COSCO', 'MAEU', 'OOCL']
+  
+  // 위험물 특화 템플릿 풀 (시안 기반 현실성 높은 데이터)
+  const dgTemplates = [
+    { unNumber: '1006', imoClass: '2.2', technicalName: 'ARGON, COMPRESSED', properShippingName: 'ARGON, COMPRESSED' },
+    { unNumber: '1263', imoClass: '3', technicalName: 'PAINT RELATED MATERIAL', properShippingName: 'PAINT RELATED MATERIAL MATE' },
+    { unNumber: '3082', imoClass: '9', technicalName: 'ENVIRONMENTALLY HAZARDOUS SUBSTANCE', properShippingName: 'CHEMICAL PRODUCT' },
+    { unNumber: '1993', imoClass: '3', technicalName: 'FLAMMABLE LIQUID, N.O.S.', properShippingName: 'CLEANING SOLVENT' },
+    { unNumber: '2922', imoClass: '8', technicalName: 'CORROSIVE LIQUID, TOXIC, N.O.S.', properShippingName: 'ACIDIC CHEMICAL MIXTURE' }
+  ]
+  const booleanStrings = ['Y(true)', 'N(false)']
+  const emsList = ['F-C, S-V', 'F-A, S-B', 'F-E, S-D']
+  const pkgGroups = ['1', '2', '3']
+
+  for (let i = 1; i <= 4; i++) {
+    const prefix = containerPrefixes[Math.floor(Math.random() * containerPrefixes.length)]
+    const sizeType = sizeTypes[Math.floor(Math.random() * sizeTypes.length)]
+    const randomDg = dgTemplates[Math.floor(Math.random() * dgTemplates.length)]
+
+    data.push({
+      // 컨테이너 기본 식별자 (리스트 렌더링용)
+      containerNo: String(123455 + i), // 123456, 123457, 123458, 123459 생성
+      sealNo: String(Math.floor(Math.random() * 1000000000000)).padStart(12, '0'),
+      sizeType: sizeType,
+      
+      // 위험물 상세 정보 필드 (시안 매핑용)
+      unNumber: randomDg.unNumber,
+      imoClass: randomDg.imoClass,
+      technicalName: Math.random() > 0.2 ? randomDg.technicalName : '-', 
+      dgGrossWeight: `${Math.floor(Math.random() * 400) + 50} / KGM`,
+      dgNetWeight: `${Math.floor(Math.random() * 200) + 10} / KGM`,
+      netVolume: `${(Math.random() * 8 + 0.5).toFixed(1)} / MTQ`,
+      reportableQuantity: booleanStrings[Math.floor(Math.random() * booleanStrings.length)],
+      marinePollutant: booleanStrings[Math.floor(Math.random() * booleanStrings.length)],
+      exceptedQuantity: booleanStrings[Math.floor(Math.random() * booleanStrings.length)],
+      emsNumber: emsList[Math.floor(Math.random() * emsList.length)],
+      packagingGroup: pkgGroups[Math.floor(Math.random() * pkgGroups.length)],
+      properShippingName: randomDg.properShippingName,
+      flashPoint: Math.random() > 0.3 ? String(Math.floor(Math.random() * 60) + 5) : '-',
+      dgTempUnit: 'CEL'
+    })
+  }
+  return data
+}
+
+// 위험물 전용 데이터 반응형 참조 변수 선언
+const dangerousCargoList = ref(generateDangerousCargoData())
+
 // 컨테이너 데이터 참조
 const containerList = ref(generateContainerData())
+
+const dgSubPanelOpen = ref(false)
+
+const openDgSubPanel = () => {
+  // 안전장치: 위험물 리스트에 데이터가 존재하면 첫 번째 아이템을 미리 선택 처리
+  if (dangerousCargoList.value && dangerousCargoList.value.length > 0) {
+    selectedContainer.value = dangerousCargoList.value[0]
+  }
+  
+  // 패널 열기
+  dgSubPanelOpen.value = true
+}
+
+watch(() => dialogOpen.value, (newVal) => {
+  if (!newVal) {
+    dgSubPanelOpen.value = false
+  }
+})
 
 // 약관 데이터
 const termsData = ref([
@@ -1472,19 +1573,6 @@ const detailTabItems = computed(() => {
   return baseTabs
 })
 
-
-// 1. DG 서브 패널 제어 변수 선언
-const dgSubPanelOpen = ref(false)
-
-// 2. [안전장치] 메인 패널이 통째로 닫힐 때 서브 패널 상태도 무조건 클린 정리
-// 기존 closeDialog 함수 내부를 찾아서 닫힘 처리를 연동하거나 watch를 사용합니다.
-watch(() => dialogOpen.value, (newVal) => {
-  if (!newVal) {
-    dgSubPanelOpen.value = false
-  }
-})
-
-
 // 글로벌 eBL 표준 규격을 모사한 고품질 데이터셋 정의
 const blEdiRawData = ref({
   documentHeader: {
@@ -1629,8 +1717,6 @@ const blEdiRawData = ref({
   font-family: inherit;
 }
 
-
-/* 1. 전체 코드 폰트 및 자간 구성 정돈 */
 .ebl-json-viewer-container {
   font-family: inherit;
   font-size: 14px !important;
@@ -1641,83 +1727,76 @@ const blEdiRawData = ref({
   background:#EBF0F5;
 }
 
-/* 2. 에디터 감성의 확실한 데이터 타입별 색상 매핑 (Syntax Highlighting) */
-
-/* Key (속성명): 시안 및 에디터 특유의 자주/붉은 계열 색상 */
 :deep(.jv-key) {
-  color: #D85491 !important; /* 선명한 Crimson / Rose 계열 */
+  color: #D85491 !important; 
   font-weight: 500;
   margin-right: 4px;
 }
 
-/* String (문자열 값): 에디터 표준 브라우저 블루 계열 */
 :deep(.jv-string) {
-  color: #295BFF !important; /* 깊고 선명한 Royal Blue */
+  color: #295BFF !important; 
   font-weight: 400;
 }
 
-/* Number (숫자 값): 녹색 혹은 오렌지 계열 */
 :deep(.jv-number) {
-  color: #295BFF !important; /* Amber / Orange 계열 */
+  color: #295BFF !important; 
   font-weight: 500;
 }
 
-/* Boolean (논리값) & Null */
 :deep(.jv-boolean), :deep(.jv-null) {
-  color: #295BFF !important; /* Violet 계열 */
+  color: #295BFF !important; 
   font-weight: bold;
 }
 
-/* 괄호 및 기호 (중괄호, 대괄호, 콤마, 콜론) */
 :deep(.jv-code) {
-  color: #6B7C93 !important; /* 기본 기호는 Slate Grey */
+  color: #6B7C93 !important; 
   padding-left:16px !important;
   margin-top:2px !important;
   margin-bottom:2px !important;
 }
 
 :deep(.jv-node) {
-  color: #6B7C93 !important; /* 기본 기호는 Slate Grey */
+  color: #6B7C93 !important; 
   padding-left:16px !important;
   margin-top:2px !important;
   margin-bottom:2px !important;
 }
 
-/* 3. 에디터 특유의 들여쓰기 공간감 및 가이드 라인(인덴트 세로선) 구현 */
 :deep(.jv-item) {
   transition: border-color 0.2s ease;
 }
 
-/* 루트 깊이의 가장 바깥 테두리 선은 제외 처리 */
 :deep(.jv-container > .jv-code > .jv-item) {
   border-left: none !important;
   padding-left: 0 !important;
   margin-left: 0 !important;
 }
 
-/* 1. 기본 스타일 (가장 밑바탕이 되는 디폴트 기호 정의) */
-/* 처음 화면이 열릴 때나 기본적으로 무조건 플러스(+)가 나오도록 베이스를 깔아둡니다. */
+:deep(.jv-toggle) {
+  position:relative;
+}
+
 :deep(.jv-toggle::before) {
-  content: "+" !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  color: #0284C7 !important; /* 플러스일 때 블루 톤 */
-  font-family: monospace !important;
+  content:'' !important;
+  width:16px; 
+  height:16px; 
+  position:absolute; 
+  top:0; 
+  left:0; 
+  background:url(/assets/images/common/dgSourcePlus.svg) 0 0 no-repeat !important;
 }
 
-/* 2. 클래스 저격 스타일 (우선순위가 더 높음) */
-/* 개발자 도구에서 확인하신 'open' 클래스가 부모 노드에 붙는 순간, 
-   CSS 우선순위 규칙에 의해 위의 플러스(+)를 밀어내고 마이너스(-)로 강제 덮어씁니다. */
 :deep(.jv-toggle.open::before){
-  content: "-" !important;
-  color: #475569 !important; /* 마이너스일 때 차분한 슬레이트 그레이 톤 */
+  content:'' !important;
+  width:16px; 
+  height:16px; 
+  position:absolute; 
+  top:0; 
+  left:0; 
+  background:url(/assets/images/common/dgSourceMinus.svg) 0 0 no-repeat !important;
 }
 
-/* 3. 기본 사각형 토글 박스 레이아웃 (유지) */
 :deep(.jv-code .jv-toggle) {
-  background: #FFFFFF !important;
-  border: 1px solid #94A3B8 !important;
-  border-radius: 4px !important;
   width: 16px !important;
   height: 16px !important;
   display: inline-flex !important;
@@ -1741,6 +1820,87 @@ const blEdiRawData = ref({
 }
 
 /* ==========================================================================
-   END: B/L Data Details - 진짜 VS Code 에디터 풍 스타일 오버라이딩
+  END: B/L Data Details - 진짜 VS Code 에디터 풍 스타일 오버라이딩
+========================================================================== */
+
+/* ==========================================================================
+  START: DG 탭 메인 카드 목록 및 버튼 퍼블리싱 스타일
+========================================================================== */
+.ebl-dg-tab-content {
+  background-color: #FFFFFF;
+}
+
+.ebl-dg-total-header {
+  font-size: 16px;
+  font-weight: 700;
+  color: #121A26;
+}
+.ebl-dg-total-header .count {
+  color: #295BFF;
+}
+
+.ebl-dg-spec-box {
+  width: 100%;
+  background: #F5F7FA;
+  border: 1px solid #DCE3EB;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.box-header .hs-code-title .label {
+  font-size: 14px;
+  color: #6B7C93;
+}
+
+.box-header .hs-code-title .code {
+  font-size: 18px;
+  color: #121A26;
+}
+
+.box-header .eq-ref-badge-btn {
+  font-size: 12px;
+  font-weight:500;
+  color: #121A26;
+  border: 1px solid #121A26;
+  line-height:16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #FFFFFF;
+  border:1px solid #121A26;
+}
+
+.box-body-sheet {
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.data-col .data-label {
+  font-size: 12px;
+  color: #3B4A5E;
+  margin-bottom: 8px;
+}
+.data-col .data-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #121A26;
+}
+.data-col .data-value .unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: #121A26;
+  margin-left: 4px;
+}
+
+.ebl-dg-spec-box.is-active {
+  background: #DEE8FF !important;
+  border: 1px solid #295BFF !important;
+}
+
+/* ==========================================================================
+   END: DG 탭 메인 카드 목록 및 버튼 퍼블리싱 스타일
    ========================================================================== */
 </style>

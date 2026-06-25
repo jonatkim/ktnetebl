@@ -30,7 +30,7 @@ const props = defineProps({
   },
 })
 
-const predefinedColors = ['black', 'red', 'pink', 'amber', 'mint', 'blue', 'violet', 'gray']
+const predefinedColors = ['black', 'red', 'pink', 'amber', 'mint', 'blue', 'violet', 'gray', 'dg']//dg전용 badge 스타일 추가
 const isPredefinedColor = computed(() => predefinedColors.includes(props.color))
 
 const colorClass = computed(() => (isPredefinedColor.value ? `ebl-badge--${props.color}` : ''))

@@ -30,9 +30,19 @@
             </template>
             <span>Sample Tooltip</span>
           </VTooltip>
+          <!--2026.06.25추가-->
+          <EblBadge color="red" variant="outlined">
+            <span>DG</span>
+          </EblBadge>
+        </div>
+      </div>
+      <div class="ebl-dg-notice-box">
+        <div class="ebl-dg-notice-box__inner">
+          <p>위험물정보는 PC환경에서 조회가 가능합니다.</p>
         </div>
       </div>
     </div>
+
     <section class="mt-6">
       <EblInfo vertical>
         <EblInfoItem label="Recipient" has-input>
@@ -54,7 +64,7 @@
 
     <EblTabs
       v-model="activeTab"
-      v-sticky="173"
+      v-sticky="202"
       :items="[
         { label: 'B/L Info', value: 'bl' },
         { label: 'Container Info', value: 'container' },
@@ -616,3 +626,52 @@ const loadMoreTransaction = () => {
   }, 1000)
 }
 </script>
+<style scoped>
+.ebl-dg-notice-box {
+  width: 100%;
+  background-color: #FFF0F0 !important;
+  margin-top: -8px;
+  border-radius:0px 0px 8px 8px; overflow:hidden;
+}
+
+.ebl-dg-notice-box__inner {
+  background-color: #FFF0F0 !important;
+  border-radius: 4px;
+  padding: 16px 24px 8px;
+  text-align: center;
+  margin-top: -8px;
+}
+
+.ebl-dg-notice-box__inner p {
+  color: #FF1C1C !important; /* 시안의 위험물 강조 레드 컬러 */
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 !important;
+  line-height: 1.4;
+}
+
+/* 리스트 페이지에서 등록했던 정규 테마 클래스(--dg) 스타일을 상세 페이지에도 연동 */
+:deep(.ebl-badge--dg) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding-right: 28px !important; /* 느낌표 아이콘 공간 */
+  position: relative !important;
+  background: transparent !important;
+  border: 1px solid #FF1C1C !important;
+  color: #FF1C1C !important;
+}
+
+:deep(.ebl-badge--dg)::after {
+  content: '' !important;
+  display: block !important;
+  width: 16px !important;
+  height: 16px !important;
+  position: absolute !important;
+  right: 6px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: url('/images/badgeExclamation.svg') no-repeat 50% 50% !important;
+  background-size: contain !important;
+}
+</style>

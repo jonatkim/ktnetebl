@@ -599,9 +599,8 @@ export const PUB_MENUS = [
     type: '화면',
     desc: 'DG화물에 대한 상세 페이지 구성',
     completedAt: '2026-06-24',
-    mobileApply: '필수 적용',
-    mobileAttr: 'Body',
-    mobileCompletedAt: '2026-06-24',
+    mobileApply: '미적용',
+    mobileAttr: 'N/A',
     nature: '공통',
   },
 
@@ -1479,5 +1478,5 @@ export const PUB_MENUS = [
 ].map((item) => ({
   ...item,
   mobileCompletedAt: item.mobileCompletedAt ?? '',
-  mobileDueAt: item.mobileDueAt ?? (item.service === 'ebl' ? DEFAULT_MOBILE_DUE_AT : ''),
+  mobileDueAt: item.mobileDueAt ?? (item.mobileApply === '미적용' ? '' : (item.service === 'ebl' ? DEFAULT_MOBILE_DUE_AT : '')),
 }))

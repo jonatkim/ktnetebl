@@ -33,6 +33,15 @@
           </slot>
         </div>
 
+        <!--2026.06.25 추가 cargo type-->
+        <div v-if="props.cargoOptions && props.cargoOptions.length > 0" class="ebl-filter-dialog__section">
+          <slot name="cargo-type" :pending="pending" :options="cargoOptions">
+            <EblInfoItem :label="cargoLabel" vertical has-input>
+              <EblSelect v-model="pending.cargoType" block :options="cargoOptions" />
+            </EblInfoItem>
+          </slot>
+        </div>
+
         <!-- 추가 필터 슬롯 -->
         <slot name="filters" :pending="pending" />
 
@@ -189,6 +198,16 @@ const props = defineProps({
     default: () => [],
   },
 
+  /*2026.06.25*/
+  /**
+   * Cargo Type 필터 레이블
+   * @type {String}
+   */
+  cargoLabel: {
+    type: String,
+    default: 'Cargo Type',
+  },
+
   /**
    * 상태/필터 레이블
    * @type {String}
@@ -259,6 +278,8 @@ const modelValue = computed({
 const pending = reactive({
   query: props.filterValue.query || '',
   status: props.filterValue.status || '',
+  //2026.06.25 추가
+  cargoType: props.filterValue.cargoType || '',
   range:
     props.filterValue.range && typeof props.filterValue.range === 'object'
       ? { ...props.filterValue.range }
@@ -358,6 +379,7 @@ const onApply = () => {
   emit('update:filterValue', {
     query: pending.query,
     status: pending.status,
+    cargoType: pending.cargoType, //2026.06.25 
     range: pending.range,
   })
   emit('filter:apply')
@@ -367,6 +389,7 @@ const onApply = () => {
 const onReset = () => {
   pending.query = ''
   pending.status = ''
+  pending.cargoType = '' //2026.06.25
   if (pending.range && typeof pending.range === 'object') {
     pending.range.from = ''
     pending.range.to = ''
@@ -375,6 +398,7 @@ const onReset = () => {
   emit('update:filterValue', {
     query: pending.query,
     status: pending.status,
+    cargoType: pending.cargoType, //2026.06.25
     range:
       pending.range && typeof pending.range === 'object' ? { ...pending.range } : pending.range,
   })
@@ -391,6 +415,7 @@ watch(
     if (modelValue.value) return // 바텀시트 열려있으면 무시
     pending.query = newVal.query || ''
     pending.status = newVal.status || ''
+    pending.cargoType = newVal.cargoType || '' //2026.06.25
     pending.range = newVal.range && typeof newVal.range === 'object' ? { ...newVal.range } : false
   },
   { deep: true },
