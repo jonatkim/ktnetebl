@@ -245,7 +245,6 @@ const filteredItems = computed(() => {
     )
   }
 
-  // 3. ★ Cargo Type 필터링 (고유 속성으로 정확하게 서칭하도록 정교화)
   if (appliedFilter.value.cargoType === 'dg') {
     result = result.filter(item => item.isDangerousCargo === true)
   }
