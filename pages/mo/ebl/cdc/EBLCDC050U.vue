@@ -36,7 +36,7 @@
         v-for="item in visibleItems"
         :key="item.id"
         :item="item"
-        @bl-no:click="goToDetail"
+        @bl-no:click="goToDetail(item)"
       />
     </div>
 
@@ -135,8 +135,13 @@ const onFilterReset = resetPagination
 // ============================================
 // 페이지 이동 메서드
 // ============================================
-const goToDetail = () => {
-  router.push('/mo/ebl/cdc/EBLCDC110P')
+const goToDetail = (item) => {
+  router.push({
+    path: '/mo/ebl/cdc/EBLCDC110P',
+    query: {
+      isDg: item.isDangerousCargo ? 'Y' : 'N'
+    }
+  })
 }
 
 // ============================================

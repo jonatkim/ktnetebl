@@ -109,6 +109,11 @@
       background: var(--bg-primary-disabled, #bcc7d4);
       color: var(--text-inverse-disabled, rgba(255, 255, 255, 0.4));
     }
+
+    /*type02 추가*/
+    &.type02 {
+      margin-right:8px;
+    }
   }
   &--tertiary {
     background: var(--bg-surface-inverse-normal, #121a26);

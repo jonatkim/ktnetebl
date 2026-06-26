@@ -17,12 +17,13 @@
           <EblBadge variant="tonal" color="mint">ISSUED</EblBadge>              
           <EblBadge variant="tonal" color="gray">ISSUE</EblBadge>
           <!--2026.06.25추가-->
-          <EblBadge color="red" variant="outlined">
+          <EblBadge v-if="isDangerous" color="dg" variant="outlined">
             <span>DG</span>
           </EblBadge>
         </div>
       </div>
-      <div class="ebl-dg-notice-box">
+
+      <div v-if="isDangerous" class="ebl-dg-notice-box">
         <div class="ebl-dg-notice-box__inner">
           <p>위험물정보는 PC환경에서 조회가 가능합니다.</p>
         </div>
@@ -496,6 +497,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router' // 2026.06.25 추가
+const route = useRoute() // 2026.06.25 추가
+// 2026.06.25 추가: 라우터 쿼리 스트링 값을 읽어와 현재 데이터가 위험물인지 판단 (기본값 'N')
+const isDangerous = computed(() => route.query.isDg === 'Y')
 
 // ============================================
 // 페이지 메타 설정

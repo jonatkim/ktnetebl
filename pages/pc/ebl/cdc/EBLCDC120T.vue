@@ -692,6 +692,7 @@
                   color="cta" 
                   large 
                   @click="handleJsonCopy"
+                  class="type02"
                 >
                   Copy
                 </EblBtn>
