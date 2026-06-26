@@ -51,7 +51,7 @@
 
     <EblTabs
       v-model="activeTab"
-      v-sticky="202"
+      v-sticky="isDangerous ? 202 : 173"
       :items="[
         { label: 'B/L Info', value: 'bl' },
         { label: 'Container Info', value: 'container' },
