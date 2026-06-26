@@ -43,6 +43,13 @@
 
     > .v-card-text {
       padding: 32px;
+
+      // type02 추가
+      &.type02 {
+        padding:0 0 0 24px !important;
+        margin-right:24px !important;
+        margin-top:12px !important;
+      }
     }
 
     > .v-card-text.ebl-dialog__text {

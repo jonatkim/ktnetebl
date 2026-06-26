@@ -208,6 +208,7 @@
   &--small.ebl-btn--icon {
     width: 28px;
     height: 28px;
+    min-width: 28px; /*2026.06.26 min 값 추가*/
   }
 
   // 기타

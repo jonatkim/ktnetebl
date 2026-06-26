@@ -154,9 +154,10 @@
             <EblTabs
               v-model="detailTab"
               :items="[
-                { value: 'blInfo', label: 'B/L Info' },
-                { value: 'containerInfo', label: 'Container Info' },
-                { value: 'tAndCInfo', label: 'T&C Info' },
+                { value: 'blInfo', label: 'B/L' },
+                { value: 'containerInfo', label: 'Container' },
+                { value: 'dgInfo', label: 'DG' },
+                { value: 'tAndCInfo', label: 'T&C' },
               ]"
               size="lg"
               class="pt-4 mb-5"

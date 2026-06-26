@@ -116,7 +116,7 @@
         v-model="dialogOpen"
         transition="slide-x-reverse-transition"
         content-class="ebl-dialog ebl-dialog--multiple fill-height"
-        :persistent="transactionStatusOpen || previewOpen"
+        :persistent="transactionStatusOpen || previewOpen || bldataOpen || dgSubPanelOpen"
         scrollable
         @close="closeDialog"
       >
@@ -478,14 +478,14 @@
                     :key="index"
                     class="ebl-dg-spec-box"
                     :class="{ 'is-active': selectedContainer?.containerNo === item.containerNo }"
-                    @click="selectedContainer = item"
+                    @click="selectedContainer = item; dgSubPanelOpen = true;"
                   >
                     <div class="box-header d-flex align-center justify-space-between mb-6">
                       <div class="hs-code-title">
                         <span class="label mr-2">HS Code</span>
                         <span class="code font-weight-bold">840900</span>
                       </div>
-                      <button class="eq-ref-badge-btn" @click.stop="selectedContainer = item; dgSubPanelOpen = true">
+                      <button class="eq-ref-badge-btn">
                         Eq Ref: GAOU2139104
                       </button>
                     </div>
@@ -666,7 +666,8 @@
                 <VIcon icon="ebli:close" :size="20" />
               </EblBtn>
             </VCardTitle>
-            <VCardText class="ebl-dialog__text overflow-y-auto">
+            <!--2026.06.26 type02 추가-->
+            <VCardText class="ebl-dialog__text type02">
               <ClientOnly>
                 <div class="ebl-json-viewer-container pa-6">
                   <json-viewer
@@ -702,7 +703,7 @@
             <VCardTitle class="ebl-dialog__header">
               <span class="title">Dangerous Cargo Details</span>
               <VSpacer />
-              <EblBtn icon pill small @click="dgSubPanelOpen = false">
+              <EblBtn icon pill small @click="dgSubPanelOpen = false; selectedContainer = null;">
                 <VIcon icon="ebli:close" :size="20" />
               </EblBtn>
             </VCardTitle>
@@ -728,7 +729,9 @@
                       <EblInfoItem label="Excepted Quantity">{{ selectedContainer.exceptedQuantity }}</EblInfoItem>
                       <EblInfoItem label="EMS Number">{{ selectedContainer.emsNumber }}</EblInfoItem>
                       <EblInfoItem label="Packaging Group">{{ selectedContainer.packagingGroup }}</EblInfoItem>
-                      <EblInfoItem label="Proper Shipping Name">{{ selectedContainer.properShippingName }}</EblInfoItem>
+                      <div class="wordBreak">
+                        <EblInfoItem label="Proper Shipping Name" class="wordBreak">{{ selectedContainer.properShippingName }}</EblInfoItem>
+                      </div>
                       <EblInfoItem label="Flash Point">{{ selectedContainer.flashPoint }}</EblInfoItem>
                       <EblInfoItem label="Temp Unit">{{ selectedContainer.dgTempUnit }}</EblInfoItem>
                     </EblInfo>
@@ -1169,6 +1172,7 @@ const openDgSubPanel = () => {
 watch(() => dialogOpen.value, (newVal) => {
   if (!newVal) {
     dgSubPanelOpen.value = false
+    selectedContainer.value = null
   }
 })
 
@@ -1517,6 +1521,7 @@ const openDetailDialog = (row) => {
 const closeDialog = () => {
   dialogOpen.value = false
   detailRow.value = null
+  selectedContainer.value = null
 }
 
 // 토글 - Preview 팝업 표시 여부
@@ -1819,13 +1824,6 @@ const blEdiRawData = ref({
   margin:0 !important;
 }
 
-/* ==========================================================================
-  END: B/L Data Details - 진짜 VS Code 에디터 풍 스타일 오버라이딩
-========================================================================== */
-
-/* ==========================================================================
-  START: DG 탭 메인 카드 목록 및 버튼 퍼블리싱 스타일
-========================================================================== */
 .ebl-dg-tab-content {
   background-color: #FFFFFF;
 }
@@ -1841,13 +1839,17 @@ const blEdiRawData = ref({
 
 .ebl-dg-spec-box {
   width: 100%;
-  background: #F5F7FA;
+  background: #fff;
   border: 1px solid #DCE3EB;
   border-radius: 12px;
-  padding: 20px;
+  padding: 20px 24px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-sizing: border-box;
+}
+
+.ebl-dg-spec-box:hover {
+  background: #F5F7FA;
 }
 
 .box-header .hs-code-title .label {
@@ -1873,9 +1875,9 @@ const blEdiRawData = ref({
 }
 
 .box-body-sheet {
-  background: #FFFFFF;
+  background: #EBF0F5;
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px 24px;
 }
 
 .data-col .data-label {
@@ -1900,7 +1902,11 @@ const blEdiRawData = ref({
   border: 1px solid #295BFF !important;
 }
 
-/* ==========================================================================
-   END: DG 탭 메인 카드 목록 및 버튼 퍼블리싱 스타일
-   ========================================================================== */
+/* 2026.06.26 추가: 래핑 클래스를 활용한 내부 구조 정밀 제어 */
+:deep(.wordBreak .ebl-info-item__label-text) {
+  overflow:unset !important;
+  text-overflow:unset !important;
+  white-space:unset !important;
+  word-break:keep-all !important;
+}
 </style>

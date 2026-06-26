@@ -1,5 +1,5 @@
 <template>
-  <div class="ebl-page-container pt-0">
+  <div class="ebl-page-container pt-0" @click="closeAllTooltips"><!--2026.06.26 툴팁 제어-->
     <EblTabs
       v-model="activeTab"
       v-sticky="32"
@@ -142,13 +142,14 @@ const goToDetail = () => {
 // ============================================
 // 샘플 데이터
 // ============================================
+//2026.06.26 툴팁 제거 dg 제외
 const STATUS_BADGE_CONFIG = {
-  issued: { label: 'ISSUED', color: 'mint', tooltip: 'Issued' },
-  amending: { label: 'AMENDING', color: 'violet', tooltip: 'Amending' },
-  switching: { label: 'SWITCHING', color: 'violet', tooltip: 'Switching' },
-  delivery: { label: 'DELIVERY', color: 'violet', tooltip: 'Delivery' },
-  pending: { label: 'PENDING', color: 'amber', tooltip: 'Pending' },
-  voided: { label: 'VOIDED', color: 'red', tooltip: 'Voided' },
+  issued: { label: 'ISSUED', color: 'mint' },
+  amending: { label: 'AMENDING', color: 'violet' },
+  switching: { label: 'SWITCHING', color: 'violet' },
+  delivery: { label: 'DELIVERY', color: 'violet' },
+  pending: { label: 'PENDING', color: 'amber' },
+  voided: { label: 'VOIDED', color: 'red' },
   
   dg: { 
     label: 'DG', 
@@ -157,10 +158,11 @@ const STATUS_BADGE_CONFIG = {
   }
 }
 
+//2026.06.26 툹팁 제거
 const SECOND_BADGE_TYPES = [
-  { label: 'ISSUE', color: 'gray', tooltip: 'Issue' },
-  { label: 'SACC', color: 'gray', tooltip: 'SACC' },
-  { label: 'ENDORSE', color: 'gray', tooltip: 'Endorse' },
+  { label: 'ISSUE', color: 'gray' },
+  { label: 'SACC', color: 'gray' },
+  { label: 'ENDORSE', color: 'gray' },
 ]
 
 const COMPANIES = [
@@ -200,9 +202,10 @@ const items = ref(
 
     const isDangerous = index === 0 || index % 6 === 0
     if (isDangerous) {
-      badgeList.push(STATUS_BADGE_CONFIG['dg'])
-    } else if (index === 0) {
-      badgeList = [STATUS_BADGE_CONFIG['dg'], SECOND_BADGE_TYPES[index % SECOND_BADGE_TYPES.length]]
+      badgeList.push({
+        ...STATUS_BADGE_CONFIG['dg'],
+        showTooltip: ref(false) // 외곽 영역 클릭 시 닫기 이벤트를 바인딩하기 위한 독립 플래그
+      })
     }
 
     return {
@@ -286,6 +289,15 @@ watch(
   },
   { immediate: true },
 )
+
+const closeAllTooltips = () => {
+  items.value.forEach(item => {
+    const dgBadge = item.badges.find(b => b.label === 'DG')
+    if (dgBadge && dgBadge.showTooltip) {
+      dgBadge.showTooltip.value = false
+    }
+  })
+}
 </script>
 
 <style scoped>
