@@ -116,7 +116,7 @@
         v-model="dialogOpen"
         transition="slide-x-reverse-transition"
         content-class="ebl-dialog ebl-dialog--multiple fill-height"
-        :persistent="transactionStatusOpen || previewOpen || bldataOpen || dgSubPanelOpen"
+        :persistent="true"
         scrollable
         @close="closeDialog"
       >
@@ -478,7 +478,7 @@
                     :key="index"
                     class="ebl-dg-spec-box"
                     :class="{ 'is-active': selectedContainer?.containerNo === item.containerNo }"
-                    @click="selectedContainer = item; dgSubPanelOpen = true;"
+                    @click="openDangerousSubPanel(item)"
                   >
                     <div class="box-header d-flex align-center justify-space-between mb-6">
                       <div class="hs-code-title">
@@ -1528,6 +1528,7 @@ const toggleBlData = () => {
   if (bldataOpen.value) {
     bldataOpen.value = false
   } else {
+    dgSubPanelOpen.value = false
     transactionStatusOpen.value = false
     previewOpen.value = false
     bldataOpen.value = true
@@ -1539,6 +1540,7 @@ const togglePreview = () => {
   if (previewOpen.value) {
     previewOpen.value = false
   } else {
+    dgSubPanelOpen.value = false
     transactionStatusOpen.value = false
     bldataOpen.value = false
     previewOpen.value = true
@@ -1550,6 +1552,7 @@ const toggleTransactionStatus = () => {
   if (transactionStatusOpen.value) {
     transactionStatusOpen.value = false
   } else {
+    dgSubPanelOpen.value = false
     previewOpen.value = false
     bldataOpen.value = false
     transactionStatusOpen.value = true
@@ -1627,6 +1630,16 @@ const blEdiRawData = ref({
     cargoDescription: "CHEMICAL RAW MATERIALS AND INDUSTRIAL PROTECTIVE EQUIPMENTS (NON-HAZARDOUS & DANGEROUS GOODS APPLIED)"
   }
 })
+
+const openDangerousSubPanel = (item) => {
+  selectedContainer.value = item
+
+  bldataOpen.value = false
+  transactionStatusOpen.value = false
+  previewOpen.value = false
+
+  dgSubPanelOpen.value = true
+}
 </script>
 
 <!--2026.06.24 no data 강제처리-->
