@@ -64,7 +64,7 @@
               block 
               :options="[
                 { label: 'All Cargo', value: '' },
-                { label: 'DG', value: 'dg' }
+                { label: 'DG Only', value: 'dg' }
               ]" 
             />
           </EblInfoItem>

@@ -666,10 +666,9 @@
                 <VIcon icon="ebli:close" :size="20" />
               </EblBtn>
             </VCardTitle>
-            <!--2026.06.26 type02 추가-->
             <VCardText class="ebl-dialog__text type02">
               <ClientOnly>
-                <div class="ebl-json-viewer-container pa-6">
+                <div class="ebl-json-viewer-container pa-6 targetObj">
                   <json-viewer
                     :value="blEdiRawData"
                     :expanded="true"
@@ -709,7 +708,7 @@
             </VCardTitle>
 
             <VCardText class="ebl-dialog__text overflow-y-auto">
-              <div class="ebl-card-linear d-flex" style="height: 700px">
+              <div class="ebl-card-linear d-flex" style="height: 100%">
                 <EblContainerList
                   v-model="selectedContainer"
                   :list="dangerousCargoList"
@@ -1730,6 +1729,7 @@ const blEdiRawData = ref({
   padding:24px !important;
   border-radius:16px;
   background:#EBF0F5;
+  height:100%;
 }
 
 :deep(.jv-key) {

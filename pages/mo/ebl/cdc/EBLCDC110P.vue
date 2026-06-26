@@ -13,23 +13,9 @@
             @click="previewDialog = true"
           />
         </div>
-        <div class="ebl-header-box__badge">
-          <VTooltip location="top" scroll-strategy="close">
-            <template #activator="{ props }">
-              <span v-bind="props">
-                <EblBadge variant="tonal" color="mint">ISSUED</EblBadge>
-              </span>
-            </template>
-            <span>Sample Tooltip</span>
-          </VTooltip>
-          <VTooltip location="top" scroll-strategy="close">
-            <template #activator="{ props }">
-              <span v-bind="props">
-                <EblBadge variant="tonal" color="gray">ISSUE</EblBadge>
-              </span>
-            </template>
-            <span>Sample Tooltip</span>
-          </VTooltip>
+        <div class="ebl-header-box__badge">    
+          <EblBadge variant="tonal" color="mint">ISSUED</EblBadge>              
+          <EblBadge variant="tonal" color="gray">ISSUE</EblBadge>
           <!--2026.06.25추가-->
           <EblBadge color="red" variant="outlined">
             <span>DG</span>
@@ -468,23 +454,10 @@
               <div class="ebl-header-box__title">
                 <h3>HDMUSKLM70328427</h3>
               </div>
-              <div class="ebl-header-box__badge">
-                <VTooltip location="top" scroll-strategy="close">
-                  <template #activator="{ props }">
-                    <span v-bind="props">
-                      <EblBadge variant="tonal" color="mint">ISSUED</EblBadge>
-                    </span>
-                  </template>
-                  <span>Sample Tooltip</span>
-                </VTooltip>
-                <VTooltip location="top" scroll-strategy="close">
-                  <template #activator="{ props }">
-                    <span v-bind="props">
-                      <EblBadge variant="tonal" color="gray">ISSUE</EblBadge>
-                    </span>
-                  </template>
-                  <span>Sample Tooltip</span>
-                </VTooltip>
+              <div class="ebl-header-box__badge">  
+                <EblBadge variant="tonal" color="mint">ISSUED</EblBadge>
+            
+                <EblBadge variant="tonal" color="gray">ISSUE</EblBadge>
               </div>
             </div>
           </div>

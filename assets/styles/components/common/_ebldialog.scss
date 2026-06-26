@@ -43,13 +43,6 @@
 
     > .v-card-text {
       padding: 32px;
-
-      // type02 추가
-      &.type02 {
-        padding:0 0 0 24px !important;
-        margin-right:24px !important;
-        margin-top:12px !important;
-      }
     }
 
     > .v-card-text.ebl-dialog__text {
@@ -57,6 +50,16 @@
       /*2026.05.18 padding-right 제거*/
       // padding-right: 16px;
       @include ebl-scrollbar();
+
+      &.type02 {
+        overflow:hidden !important;
+        scrollbar-gutter: auto !important;
+
+        .targetObj {
+          overflow-y:auto !important;
+          @include ebl-scrollbar();
+        }
+      }
     }
 
     // 텍스트 다음 액션이 있을 때 텍스트 하단 패딩 줄이기
