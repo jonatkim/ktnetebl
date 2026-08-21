@@ -1,5 +1,6 @@
 <template>
   <div class="ebl-page-container pt-0">
+    <!-- 필터 탭 -->
     <EblTabs
       v-model="activeTab"
       v-sticky="32"
@@ -15,6 +16,7 @@
       </template>
     </EblSubHeader>
 
+    <!-- 카드 리스트 -->
     <div class="ebl-card-list">
       <div v-if="filteredItems.length === 0" class="ebl-card-item__empty">
         <VImg src="~/assets/images/common/not_result_found.png" width="150" height="74" />
@@ -32,6 +34,7 @@
       />
     </div>
 
+    <!-- More 버튼 -->
     <div v-if="showMore" class="ebl-more-list ebl-more-list--wrap">
       <EblBtn
         v-if="!isLoadingMore"
@@ -43,10 +46,12 @@
         More ({{ currentCount }} / {{ totalCount }})
       </EblBtn>
       <div v-else class="ebl-more-list__loading">
+        <!-- 로딩 스피너 샘플 -->
         <Vue3Lottie animation-link="/lottie/loadingSpinner.json" :height="60" :width="120" />
       </div>
     </div>
 
+    <!-- 필터 바텀시트 -->
     <EblFilterBottomSheet
       v-model="showFilter"
       v-model:filter-value="appliedFilter"
@@ -55,22 +60,7 @@
       date-label="Last Update"
       @filter:apply="onFilterApply"
       @filter:reset="onFilterReset"
-    >
-      <template #filters="{ pending }">
-        <div class="ebl-filter-dialog__section">
-          <EblInfoItem label="Cargo Type" vertical has-input>
-            <EblSelect 
-              v-model="pending.cargoType" 
-              block 
-              :options="[
-                { label: 'All Cargo', value: '' },
-                { label: 'DG Only', value: 'dg' }
-              ]" 
-            />
-          </EblInfoItem>
-        </div>
-      </template>
-    </EblFilterBottomSheet>
+    />
   </div>
 </template>
 
@@ -103,7 +93,6 @@ const showFilter = ref(false)
 const appliedFilter = ref({
   query: '',
   status: '',
-  cargoType: '', // 2026.06.25 추가
   range: {
     from: '',
     to: '',
@@ -199,30 +188,17 @@ const items = ref(
     const tabItem = tabItems.value[tabIndex]
     const status = tabItem.value
 
-    // 순정 본연의 배지 리스트 선언 구조 복원
-    const badgeList = [
-      {
-        label: tabItem.label,
-        color: STATUS_COLORS[status],
-        tooltip: `${tabItem.label} status`,
-      },
-      SECOND_BADGE_TYPES[index % SECOND_BADGE_TYPES.length],
-    ]
-
-    // 2026.06.25 추가
-    const isDangerous = index === 0 || index % 6 === 0
-    if (isDangerous) {
-      badgeList.push({
-        label: 'DG',
-        color: 'dg',
-        tooltip: '위험물정보(Dangerous cargo)는\nPC환경에서 조회가 가능합니다.'
-      })
-    }
-
     return {
       id: index + 1,
       blNo: `HDMUSELM7032842${String(index + 1).padStart(2, '0')}DPBL`,
-      badges: badgeList,
+      badges: [
+        {
+          label: tabItem.label,
+          color: STATUS_COLORS[status],
+          tooltip: `${tabItem.label} status`, // 샘플 툴팁
+        },
+        SECOND_BADGE_TYPES[index % SECOND_BADGE_TYPES.length],
+      ],
       shipper: {
         name: COMPANIES[index % COMPANIES.length],
         logo: `https://i.pravatar.cc/150?img=${(index % 50) + 1}`,
@@ -234,7 +210,6 @@ const items = ref(
       routeToCode: ROUTE_TO_CODE_LIST[index % ROUTE_TO_CODE_LIST.length],
       date: `2026-02-${String((index % 28) + 1).padStart(2, '0')} 15:15:00`,
       status,
-      isDangerousCargo: isDangerous // 2026.06.25 추가
     }
   }),
 )
@@ -257,11 +232,6 @@ const filteredItems = computed(() => {
       (item) =>
         item.shipper.name.toLowerCase().includes(query) || item.blNo.toLowerCase().includes(query),
     )
-  }
-
-  // 2026.06.25 추가
-  if (appliedFilter.value.cargoType === 'dg') {
-    result = result.filter(item => item.isDangerousCargo === true)
   }
 
   // 날짜 범위 필터
@@ -290,7 +260,7 @@ const loadMore = () => {
   setTimeout(() => {
     currentCount.value = Math.min(currentCount.value + pageSize, filteredItems.value.length)
     isLoadingMore.value = false
-  }, 1000)
+  }, 1000) // 1초 딜레이로 로딩 시뮬레이션
 }
 
 watch(
@@ -302,31 +272,3 @@ watch(
   { immediate: true },
 )
 </script>
-
-<style scoped>
-/* 2026.06.25 추가 */
-:deep(.ebl-badge--dg) {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  padding-right: 28px !important;
-  position: relative !important;
-  background: transparent !important;
-  border: 1px solid #FF1C1C !important;
-  color: #FF1C1C !important;
-}
-
-/* 2026.06.25 추가 */
-:deep(.ebl-badge--dg)::after {
-  content: '' !important;
-  display: block !important;
-  width: 16px !important;
-  height: 16px !important;
-  position: absolute !important;
-  right: 6px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  background: url('/images/badgeExclamation.svg') no-repeat 50% 50% !important;
-  background-size: contain !important;
-}
-</style>

@@ -3010,18 +3010,65 @@
 }
 
 .psm-page-container--tutorials {
+  // 2026.08월 수정
+  .psm-hero__title {
+    margin-top: 120px;
+    margin-bottom: 80px;
+    color: #000;
+    font-size: 48px;
+    font-weight: 700;
+  }
+
   .psm-tutorial-video {
+    // 2026.08월 추가
+    padding-bottom: 120px;
+
     &__box {
       display: flex;
       width: 100%;
-      height: 325px;
+      // 2026.08월 수정
+      max-width: 1440px;
+      height: auto;
+      aspect-ratio: 1440 / 810;
       padding: 50px 40px;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 30px;
       border-radius: 40px;
+      border: 0;
       background: #f5f7fb;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      // 2026.08월 수정
+      overflow: hidden;
+      padding: 0;
+      // 2026.08월 추가
+      position: relative;
+
+      img {
+        // 2026.08월 추가
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      // 2026.08월 추가
+      .psm-tutorial-video__play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        // 2026.08월 수정
+        width: 96px;
+        height: 96px;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+
     }
 
     &__mobile {
@@ -3037,7 +3084,8 @@
       font-weight: 700;
       line-height: normal;
       padding-bottom: 25px;
-      margin-bottom: 120px;
+      // 2026.08월 수정
+      margin-bottom: 48px;
     }
 
     .row {
@@ -3046,6 +3094,115 @@
 
     .psm-card {
       min-height: 325px;
+    }
+
+    // 2026.08월 추가
+    &__list {
+      border-top: 1px solid #8b8b8b;
+    }
+
+    // 2026.08월 추가
+    &__item {
+      display: flex;
+      // 2026.08월 수정
+      min-height: 344px;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 80px;
+      border-bottom: 1px solid #8b8b8b;
+      // 2026.08월 수정
+      padding: 50px 0 98px;
+
+      &:last-child {
+        // 2026.08월 추가
+        padding-bottom: 0;
+      }
+    }
+
+    // 2026.08월 추가
+    &__copy {
+      flex: 1 1 auto;
+    }
+
+    // 2026.08월 추가
+    &__step {
+      // 2026.08월 수정
+      margin-bottom: 16px;
+      color: #295bff;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 29px;
+    }
+
+    // 2026.08월 추가
+    &__item-title {
+      // 2026.08월 수정
+      margin-bottom: 16px;
+      color: #000;
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 43px;
+    }
+
+    // 2026.08월 추가
+    &__desc {
+      // 2026.08월 수정
+      margin-top: 0;
+      color: #000;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+    }
+
+    // 2026.08월 추가
+    &__video {
+      // 2026.08월 수정
+      width: 433px;
+      min-width: 433px;
+      height: 244px;
+      aspect-ratio: 433 / 244;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: #f5f7fb;
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      // 2026.08월 수정
+      overflow: hidden;
+      padding: 0;
+      // 2026.08월 추가
+      position: relative;
+
+      .psm-tutorial-process__thumbnail {
+        // 2026.08월 추가
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      // 2026.08월 추가
+      .psm-tutorial-process__play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        // 2026.08월 수정
+        width: 96px;
+        height: 96px;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+
+      // 2026.08월 추가
+      &:hover .psm-tutorial-process__play-btn {
+        opacity: 1;
+      }
     }
   }
 
@@ -3070,6 +3227,14 @@
       }
     }
 
+    // 2026.08월 수정
+    &__btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 50px;
+    }
+
     &__btn.ebl-btn {
       margin-top: 50px;
       display: inline-flex;
@@ -3090,15 +3255,55 @@
         line-height: 24px; /* 150% */
       }
     }
+
+    &__btns .psm-tutorial-download__btn.ebl-btn {
+      margin-top: 0;
+    }
   }
 
   @media (max-width: 959px) {
+    // 2026.08월 수정
+    .psm-hero__title {
+      margin-bottom: 0;
+    }
+
+    // 2026.08월 수정
+    .psm-hero__description {
+      margin-top: 20px;
+      color: #000;
+      font-family: Pretendard;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
     .psm-tutorial-video {
       padding-bottom: 0;
+
+      // 2026.08월 수정
+      .psm-hero__title {
+        margin-top: 0;
+        margin-bottom: 48px;
+        // 2026.08월 수정
+        font-size: 30px;
+      }
+
       &__box {
-        height: 200px;
-        padding: 50px 40px;
+        // 2026.08월 수정
+        height: auto;
+        aspect-ratio: 1440 / 810;
+        // 2026.08월 수정
+        padding: 0;
         border-radius: 16px;
+
+        // 2026.08월 수정
+        .psm-tutorial-video__play-btn {
+          // 2026.08월 수정
+          width: 76px;
+          height: 76px;
+          opacity: 1;
+        }
       }
     }
 
@@ -3108,7 +3313,8 @@
         font-size: 28px;
         font-weight: 600;
         line-height: 34px; /* 121.429% */
-        padding: 60px 0;
+        // 2026.08월 수정
+        padding: 80px 0 48px;
         margin-bottom: 0;
       }
 
@@ -3126,6 +3332,56 @@
           line-height: 20px;
         }
       }
+
+      // 2026.08월 추가
+      .psm-tutorial-process__item {
+        min-height: 0;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 20px;
+        // 2026.08월 수정
+        padding: 20px 0 44px;
+      }
+
+      // 2026.08월 추가
+      .psm-tutorial-process__video {
+        width: 100%;
+        min-width: 0;
+        // 2026.08월 수정
+        height: auto;
+        aspect-ratio: 433 / 244;
+      }
+
+      // 2026.08월 추가
+      .psm-tutorial-process__play-btn {
+        // 2026.08월 수정
+        width: 76px;
+        height: 76px;
+        opacity: 1;
+      }
+
+      // 2026.08월 추가
+      .psm-tutorial-process__item-title {
+        // 2026.08월 수정
+        font-size: 24px;
+        line-height: 29px;
+      }
+
+      // 2026.08월 수정
+      .psm-tutorial-process__step {
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      // 2026.08월 수정
+      .psm-tutorial-process__desc {
+        font-family: Pretendard;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
+      }
+
     }
 
     .psm-tutorial-download {
@@ -3157,7 +3413,103 @@
         min-width: 0;
         justify-content: center;
       }
+
+      // 2026.08월 수정
+      &__btns {
+        // 2026.08월 수정
+        width: 100%;
+        flex-direction: column;
+        margin-top: 24px;
+      }
+
+      &__btns .psm-tutorial-download__btn.ebl-btn {
+        margin-top: 0;
+        // 2026.08월 수정
+        width: 100%;
+        max-width: 100%;
+      }
     }
+  }
+}
+
+// 2026.08월 추가
+.psm-video-modal {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 38px 24px;
+  background: rgba(38, 38, 38, 0.72);
+}
+
+// 2026.08월 추가
+.psm-video-modal__dialog {
+  // 2026.08월 수정
+  width: min(1440px, calc(100vw - 48px));
+  // 2026.08월 수정
+  height: min(810px, calc((100vw - 48px) * 0.5625));
+  aspect-ratio: 16 / 9;
+  // 2026.08월 수정
+  background: transparent;
+}
+
+// 2026.08월 추가
+.psm-video-modal__content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  // 2026.08월 수정
+  background: transparent;
+}
+
+// 2026.08월 추가
+.psm-video-modal__content iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+// 2026.08월 추가
+.psm-video-modal__close {
+  // 2026.08월 수정
+  position: fixed;
+  z-index: 10000;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+// 2026.08월 추가
+@media (max-width: 959px) {
+  .psm-video-modal {
+    padding: 24px 16px;
+  }
+
+  .psm-video-modal__dialog {
+    // 2026.08월 수정
+    width: calc(100vw - 32px);
+  }
+
+  // 2026.08월 수정
+  .psm-video-modal__close {
+    top: 16px;
+    right: 16px;
   }
 }
 

@@ -50,16 +50,6 @@
       /*2026.05.18 padding-right 제거*/
       // padding-right: 16px;
       @include ebl-scrollbar();
-
-      &.type02 {
-        overflow:hidden !important;
-        scrollbar-gutter: auto !important;
-
-        .targetObj {
-          overflow-y:auto !important;
-          @include ebl-scrollbar();
-        }
-      }
     }
 
     // 텍스트 다음 액션이 있을 때 텍스트 하단 패딩 줄이기
@@ -81,10 +71,6 @@
       padding: 32px 32px;
       gap: 8px;
       justify-content: flex-end;
-
-      &.ty02 {
-        justify-content: flex-start;
-      }
     }
   }
 }
