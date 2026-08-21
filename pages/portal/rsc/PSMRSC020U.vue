@@ -155,6 +155,8 @@ const isVideoModalOpen = ref(false)
 const activeVideoTitle = ref('')
 // 2026.08월 추가
 const videoModalScrollY = ref(0)
+// 2026.08월 추가
+const originalHtmlOverflow = ref('')
 // 2026.08월 추가: 추후 실제 YouTube 영상 주소로 교체
 const testVideoUrl = 'https://www.youtube.com/embed/GQVVYlneoyA?rel=0&autoplay=1'
 
@@ -174,6 +176,7 @@ const openVideoModal = (title) => {
   activeVideoTitle.value = title
   isVideoModalOpen.value = true
   // 2026.08월 수정
+  originalHtmlOverflow.value = document.documentElement.style.overflow
   document.documentElement.style.overflow = 'hidden'
   requestAnimationFrame(() => {
     window.scrollTo(0, videoModalScrollY.value)
@@ -184,11 +187,16 @@ const openVideoModal = (title) => {
 const closeVideoModal = () => {
   isVideoModalOpen.value = false
   // 2026.08월 수정
-  document.documentElement.style.overflow = ''
+  document.documentElement.style.overflow = originalHtmlOverflow.value
   requestAnimationFrame(() => {
     window.scrollTo(0, videoModalScrollY.value)
   })
 }
+
+// 2026.08월 추가
+onBeforeUnmount(() => {
+  document.documentElement.style.overflow = originalHtmlOverflow.value
+})
 
 const processItems = [
   // 2026.08월 수정
