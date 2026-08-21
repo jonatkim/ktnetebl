@@ -174,21 +174,20 @@ const openVideoModal = (title) => {
   activeVideoTitle.value = title
   isVideoModalOpen.value = true
   // 2026.08월 수정
-  document.body.style.position = 'fixed'
-  document.body.style.top = `-${videoModalScrollY.value}px`
-  document.body.style.width = '100%'
-  document.body.style.overflow = 'hidden'
+  document.documentElement.style.overflow = 'hidden'
+  requestAnimationFrame(() => {
+    window.scrollTo(0, videoModalScrollY.value)
+  })
 }
 
 // 2026.08월 추가
 const closeVideoModal = () => {
   isVideoModalOpen.value = false
   // 2026.08월 수정
-  document.body.style.position = ''
-  document.body.style.top = ''
-  document.body.style.width = ''
-  document.body.style.overflow = ''
-  window.scrollTo(0, videoModalScrollY.value)
+  document.documentElement.style.overflow = ''
+  requestAnimationFrame(() => {
+    window.scrollTo(0, videoModalScrollY.value)
+  })
 }
 
 const processItems = [
